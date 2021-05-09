@@ -1,18 +1,11 @@
 import Koa from "koa";
+import middleware from "./middleware/compose";
+import dotEnv from "dotenv";
+import { delay } from "./util";
 
+dotEnv.config();
 const app = new Koa();
-
-const delay = (time) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve();
-    }, time);
-  });
-};
-
-app.use(async (ctx) => {
-  ctx.body = "hello world!";
-});
+app.use(middleware);
 
 app.listen(3000, async () => {
   console.time("server is running at http://localhost:3000");
