@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes";
-export Base from "./base";
+import Base from "./base";
 
 export default class Signature extends Base {
   status = StatusCodes.UNAUTHORIZED;
