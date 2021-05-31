@@ -49,7 +49,7 @@ const getLoggerInterface = (type = "default") => {
   return getLogger(type);
 };
 
-const writeLog = (log, type) => {
+const writeLog = (log, type = "info") => {
   const typeDict = ["error", "debug"];
   if (typeDict.indexOf(type) > -1) {
     getLoggerInterface(type)[type](log);
