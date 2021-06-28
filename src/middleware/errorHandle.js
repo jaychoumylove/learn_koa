@@ -1,11 +1,22 @@
 import Base from "../exception/base";
 import { writeErrorLog, writeInfoLog } from "./logger";
+import { Context } from "koa";
+import Miss from "../exception/miss";
 
+/**
+ * register error handle
+ * @param {Context} ctx
+ * @param {Promise} next
+ * @returns
+ */
 const errorHandle = async (ctx, next) => {
   const start = Date.now();
   try {
     writeInfoLog(`${ctx.method} ${ctx.path}: Start.`);
     await next();
+    if (404 === ctx.response.status) {
+      throw new Miss({ message: "Router not found!" });
+    }
   } catch (error) {
     if (error instanceof Base) {
       const { status, ...resData } = error;

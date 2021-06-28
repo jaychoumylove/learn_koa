@@ -1,14 +1,33 @@
 import Success from "../../exception/success";
 import User from "../model/user";
 import faker from "Faker";
+import { Context } from "koa";
+import Parameter from "../../exception/parameter";
 
+/**
+ * get info by id
+ * @param {Context} ctx
+ */
 const getInfo = async (ctx) => {
-  const info = await User.where("id", 23).fetch();
+  const { id } = ctx.params;
+  if (!id) {
+    throw new Parameter({ message: "'id' not found" });
+  }
+  const info = await User.where("id", id).fetch();
   throw new Success(info);
 };
 
+/**
+ * get info by ids
+ * @param {Context} ctx
+ */
 const getList = async (ctx) => {
-  const info = await User.where("id", "in", [3, 45, 21, 134])
+  const { ids } = ctx.request.query;
+  if (!ids) {
+    throw new Parameter({ message: "'ids' not found" });
+  }
+  const parseIds = ids.split(",");
+  const info = await User.where("id", "in", parseIds)
     .orderBy("id", "desc")
     .fetchAll();
 
@@ -16,11 +35,16 @@ const getList = async (ctx) => {
 };
 
 const getListWithPage = async (ctx) => {
-  const page = faker.random.number(10);
-  const pageSize = 15;
+  let { page, size } = ctx.request.query;
+  if (!page) {
+    page = faker.random.number(10);
+  }
+  if (!size) {
+    size = 15;
+  }
   const info = await new User().orderBy("id", "desc").fetchPage({
     page: page,
-    pageSize: pageSize,
+    pageSize: size,
   });
   throw new Success({
     pagination: info.pagination,
@@ -29,35 +53,47 @@ const getListWithPage = async (ctx) => {
 };
 
 const update = async (ctx) => {
-  let info = await User.where("id", 4).fetch();
+  const { id } = ctx.params;
+  if (!id) {
+    throw new Parameter({ message: "'id' not found" });
+  }
+  const { first_name, last_name } = ctx.request.body;
+  let info = await User.where("id", id).fetch();
   info = await info.save({
-    first_name: faker.Name.firstName(),
-    last_name: faker.Name.lastName(),
+    first_name,
+    last_name,
   });
   throw new Success(info);
 };
 
 const patch = async (ctx) => {
-  const info = await User.where("id", 5).save(
-    { first_name: faker.Name.firstName() },
-    { patch: true }
-  );
+  const { id } = ctx.params;
+  if (!id) {
+    throw new Parameter({ message: "'id' not found" });
+  }
+  const { first_name } = ctx.request.body;
+  const info = await User.where("id", id).save({ first_name }, { patch: true });
   throw new Success(info);
 };
 
 const del = async (ctx) => {
-  await User.where("id", ">", 5).destroy();
+  const { id } = ctx.params;
+  if (!id) {
+    throw new Parameter({ message: "'id' not found" });
+  }
+  await User.where("id", id).destroy();
   throw new Success();
 };
 
 const create = async (ctx) => {
-  // const info = await User.forge({
-  //   first_name: faker.Name.firstName(),
-  //   last_name: faker.Name.lastName(),
-  // }).save();
+  const { first_name, last_name } = ctx.request.body;
+  if (!last_name || !first_name) {
+    throw new Parameter();
+  }
+
   const info = await new User().save({
-    first_name: faker.Name.firstName(),
-    last_name: faker.Name.lastName(),
+    first_name: first_name,
+    last_name: last_name,
   });
   throw new Success(info);
 };

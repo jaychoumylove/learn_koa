@@ -8,9 +8,9 @@ export default class Base extends Error {
   message = "success";
   data = null;
 
-  constructor(data = null, status = 0) {
+  constructor(data = null, status = 200) {
     super();
-    if (data instanceof Object) {
+    if (data instanceof Object && data) {
       allowProps.map((item) => {
         if (data.hasOwnProperty(item)) {
           this[item] = data[item];
