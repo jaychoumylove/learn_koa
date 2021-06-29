@@ -3,6 +3,7 @@ import User from "../model/user";
 import faker from "Faker";
 import { Context } from "koa";
 import Parameter from "../../exception/parameter";
+import Miss from "../../exception/miss";
 
 /**
  * get info by id
@@ -59,6 +60,9 @@ const update = async (ctx) => {
   }
   const { first_name, last_name } = ctx.request.body;
   let info = await User.where("id", id).fetch();
+  if (!info) {
+    throw new Miss();
+  }
   info = await info.save({
     first_name,
     last_name,
@@ -72,7 +76,10 @@ const patch = async (ctx) => {
     throw new Parameter({ message: "'id' not found" });
   }
   const { first_name } = ctx.request.body;
-  const info = await User.where("id", id).save({ first_name }, { patch: true });
+  const info = await User.where("id", id).save(
+    { first_name },
+    { patch: true, require: false }
+  );
   throw new Success(info);
 };
 
@@ -81,7 +88,7 @@ const del = async (ctx) => {
   if (!id) {
     throw new Parameter({ message: "'id' not found" });
   }
-  await User.where("id", id).destroy();
+  await User.where("id", id).destroy({ require: false });
   throw new Success();
 };
 

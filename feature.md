@@ -4,6 +4,9 @@
 - ~~[ ] auto save fields~~
 - ~~[ ] get value with format and raw~~
 - [ ] soft delete rows
-- [ ] body parse for koa router
+- [ ] solve update with empty rows error
+- [ ] try catch with db stractions
+- [ ] the validations
+- [x] body parse for koa router
 - [x] koa router miss register => with in errhandle
 - [x] parse request param => use ctx.request.query|ctx.params instead of
