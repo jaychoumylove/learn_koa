@@ -14,6 +14,7 @@ const getInfo = async (ctx) => {
   if (!id) {
     throw new Parameter({ message: "'id' not found" });
   }
+  throw new Parameter({ message: "'id' not found" });
   const info = await User.where("id", id).fetch();
   throw new Success(info);
 };

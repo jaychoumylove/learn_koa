@@ -1,12 +1,14 @@
 import { StatusCodes } from "http-status-codes";
 import Base from "./base";
+import defaultResponse from './defaultRestCode'
 
 export default class Success extends Base {
-  status = StatusCodes.OK;
-  errorCode = 0;
-  message = "OK";
-  expose = true;
-  constructor(data) {
-    super({ data });
+  /**
+   * Generate Success Response
+   * @param {{message: String, errorCode: Number, data: Object}} data
+   * @param {Number} status
+   */
+  constructor (data = defaultResponse.Success, status = StatusCodes.OK) {
+    super(data, status)
   }
 }

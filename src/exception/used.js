@@ -1,7 +1,13 @@
 import Base from "./base";
+import defaultResponse from './defaultRestCode'
 
 export default class Used extends Base {
-  status = 226; // statuscode did't have 226
-  errorCode = 10004;
-  message = "Occupied";
+  /**
+   * Generate Used Error
+   * @param {{message: String, errorCode: Number, data: Object}} data
+   * @param {Number} status
+   */
+  constructor (data = defaultResponse.Used, status = 226) {
+    super(data, status)
+  }
 }

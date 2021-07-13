@@ -8,6 +8,11 @@ export default class Base extends Error {
   message = "success";
   data = null;
 
+  /**
+   * Generate Base Error
+   * @param {{message: String, errorCode: Number, data: Object}|null} data
+   * @param {Number} status
+   */
   constructor(data = null, status = 200) {
     super();
     if (data instanceof Object && data) {

@@ -1,7 +1,9 @@
 import Base from "../exception/base";
 import { writeErrorLog, writeInfoLog } from "./logger";
 import { Context } from "koa";
+import { StatusCodes } from "http-status-codes";
 import Miss from "../exception/miss";
+import defaultRestCode from '../exception/defaultRestCode'
 
 /**
  * register error handle
@@ -31,18 +33,17 @@ const errorHandle = async (ctx, next) => {
     }
     const spendTime = Math.round(Date.now() - start);
     writeErrorLog(
-      `${ctx.method} ${ctx.path}:spend: ${spendTime}ms. Error:${error.message} `
+      `${ctx.method} ${ctx.path}:spend: ${spendTime}ms. `
     );
+    writeErrorLog(error);
     if (process.env.APP_ENV === "dev") {
       throw error;
     }
     ctx.response.body = {
-      message: "Server unknown error",
-      errorCode: 999,
-      data: null,
+      ...defaultRestCode.InternalServer,
       requestUrl: `${ctx.method} ${ctx.path}`,
     };
-    ctx.response.status = 500;
+    ctx.response.status = StatusCodes.INTERNAL_SERVER_ERROR;
     return;
   }
 };
