@@ -4,13 +4,11 @@ import router from "./router";
 import corsHandle from "./cors";
 import NotImplemented from "../exception/notImplemented";
 import MethodNotAllowed from "../exception/methodNotAllowed";
-// import koaBody from "koa-body";
 import bodyParser from "koa-bodyparser";
 
 const all = [
   errorHandle,
   corsHandle,
-  // koaBody(),
   bodyParser(),
   router.routes(),
   router.allowedMethods({

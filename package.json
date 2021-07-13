@@ -11,6 +11,7 @@
     "bookshelf": "^1.2.0",
     "dotenv": "^9.0.1",
     "http-status-codes": "^2.1.4",
+    "joi": "^17.4.1",
     "knex": "^0.95.6",
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",

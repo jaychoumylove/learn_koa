@@ -4,6 +4,8 @@ import faker from "Faker";
 import { Context } from "koa";
 import Parameter from "../../exception/parameter";
 import Miss from "../../exception/miss";
+import Id from '../../validation/id'
+import Test from '../../validation/test'
 
 /**
  * get info by id
@@ -14,7 +16,8 @@ const getInfo = async (ctx) => {
   if (!id) {
     throw new Parameter({ message: "'id' not found" });
   }
-  throw new Parameter({ message: "'id' not found" });
+  (new Id).check(ctx.params);
+  throw new Success(info);
   const info = await User.where("id", id).fetch();
   throw new Success(info);
 };
@@ -60,6 +63,8 @@ const update = async (ctx) => {
     throw new Parameter({ message: "'id' not found" });
   }
   const { first_name, last_name } = ctx.request.body;
+  (new Test()).check(ctx.request.body);
+  throw new Success();
   let info = await User.where("id", id).fetch();
   if (!info) {
     throw new Miss();
