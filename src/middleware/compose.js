@@ -1,6 +1,6 @@
 import compose from "koa-compose";
 import errorHandle from "./errorHandle";
-import router from "./router";
+import router from "../router";
 import corsHandle from "./cors";
 import NotImplemented from "../exception/notImplemented";
 import MethodNotAllowed from "../exception/methodNotAllowed";

@@ -6,7 +6,8 @@
 - [ ] soft delete rows
 - [ ] solve update with empty rows error
 - [ ] try catch with db stractions
-- [ ] the validations
+- [x] the validations
+- [ ] split the routers
 - [x] body parse for koa router
 - [x] koa router miss register => with in errhandle
 - [x] parse request param => use ctx.request.query|ctx.params instead of
