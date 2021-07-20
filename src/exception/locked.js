@@ -8,7 +8,7 @@ export default class Locked extends Base {
    * @param {{message: String, errorCode: Number, data: Object}} data
    * @param {Number} status
    */
-  constructor (data = defaultResponse.Locked, status = StatusCodes.Locked) {
+  constructor (data = defaultResponse.Locked, status = StatusCodes.LOCKED) {
     super(data, status)
   }
 }
