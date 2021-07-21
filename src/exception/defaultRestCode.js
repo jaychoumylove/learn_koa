@@ -40,7 +40,7 @@ export default {
         data: null,
     },
     NotImplemented: {
-        message: 'METHOD_NOT_ALLOWED!',
+        message: 'Not Implemented!',
         errorCode: 10001,
         data: null,
     },

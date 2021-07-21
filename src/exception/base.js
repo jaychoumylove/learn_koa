@@ -10,7 +10,7 @@ export default class Base extends Error {
 
   /**
    * Generate Base Error
-   * @param {{message: String, errorCode: Number, data: Object}|null} data
+   * @param {{message?: String, errorCode?: Number, data?: Object}|null} data
    * @param {Number} status
    */
   constructor(data = null, status = 200) {
