@@ -65,6 +65,12 @@ export default class Test extends Base {
             'string.base': 'Invalid url!',
             'any.required': 'Please enter url!',
             'any.custom': 'Invalid Url!'
+        }),
+        last_name: Joi.string().messages({
+            'string.base': "invalid last name"
+        }),
+        first_name: Joi.string().messages({
+            'string.base': "invalid first name"
         })
     })
 }
