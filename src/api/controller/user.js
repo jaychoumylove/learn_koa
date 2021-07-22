@@ -6,8 +6,8 @@ import Parameter from '../../exception/parameter'
 import Miss from '../../exception/miss'
 import Id from '../../validation/id'
 import Test from '../../validation/test'
-import { writeInfoLog } from '../../middleware/logger'
 import Ids from '../../validation/ids'
+import Page from '../../validation/page'
 
 /**
  * get info by id
@@ -36,6 +36,7 @@ const getList = async (ctx) => {
 }
 
 const getListWithPage = async (ctx) => {
+    (new Page()).check(ctx.request.query)
     let { page, size } = ctx.request.query
     if (!page) {
         page = faker.random.number(10)
