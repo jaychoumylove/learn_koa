@@ -5,6 +5,7 @@ const User = bookshelfApp.model("User", {
   tableName: "users",
   hidden: ["password"],
   requireFetch: false,
+  softDelete: true
 });
 
 export default User;
