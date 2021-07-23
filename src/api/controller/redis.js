@@ -1,11 +1,6 @@
 import Success from '../../exception/success'
-import { Context } from 'koa'
 import RedisClient from '../../redis'
 
-/**
- * get info by id
- * @param {Context} ctx
- */
 const get = async (ctx) => {
     const { key } = ctx.request.query
     const val = await RedisClient.get(key)
