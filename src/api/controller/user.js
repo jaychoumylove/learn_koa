@@ -1,5 +1,5 @@
 import Success from '../../exception/success'
-import User from '../model/user'
+import User from '../../model/user'
 import faker from 'Faker'
 import { Context } from 'koa'
 import Parameter from '../../exception/parameter'

@@ -1,4 +1,4 @@
-import { bookshelfApp } from '../../database/knex'
+import { bookshelfApp } from '../database/knex'
 
 const User = bookshelfApp.model('User', {
     hasTimestamps: true,
