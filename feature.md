@@ -4,8 +4,8 @@
 - ~~[ ] auto save fields~~
 - ~~[ ] get value with format and raw~~
 - [ ] soft delete rows
-- [ ] solve update with empty rows error
-- [ ] try catch with db stractions
+- [x] solve update with empty rows error
+- [x] try catch with db stractions
 - [x] the validations
 - [x] split the routers
 - [x] body parse for koa router

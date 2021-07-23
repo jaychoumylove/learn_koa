@@ -8,6 +8,7 @@ import Id from '../../validation/id'
 import Test from '../../validation/test'
 import Ids from '../../validation/ids'
 import Page from '../../validation/page'
+import { bookshelfApp } from '../../database/knex'
 
 /**
  * get info by id
@@ -85,7 +86,21 @@ const patch = async (ctx) => {
 const del = async (ctx) => {
     (new Id).check(ctx.params)
     const { id } = ctx.params
-    await User.where('id', id).destroy({ require: false })
+    let transaction
+    try {
+        transaction = await bookshelfApp.transaction()
+        await User.where('id', id).destroy({
+            require: false,
+            transacting: transaction
+        })
+        // test the transaction
+        // throw new Error('Something was wrong!!!');
+        await transaction.commit()
+    } catch (e) {
+        if (transaction) await transaction.rollback()
+        throw e
+    }
+
     throw new Success()
 }
 
