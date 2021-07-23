@@ -7,6 +7,7 @@
     "@koa/cors": "^3.1.0",
     "@koa/router": "^10.0.0",
     "Faker": "^0.7.2",
+    "async-redis": "^2.0.0",
     "babel-runtime": "^6.26.0",
     "bookshelf": "^1.2.0",
     "bookshelf-paranoia": "^0.13.1",
@@ -21,6 +22,7 @@
     "log4js": "3.0.6",
     "mysql": "^2.18.1",
     "pg": "^8.6.0",
+    "redis": "^3.1.2",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

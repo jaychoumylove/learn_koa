@@ -9,6 +9,6 @@ export default class MethodNotAllowed extends Base {
      * @param {Number} status
      */
     constructor (data = {}, status = StatusCodes.METHOD_NOT_ALLOWED) {
-        super({ ...DefaultRestCode.Locked, ...data }, status)
+        super({ ...DefaultRestCode.MethodNotAllowed, ...data }, status)
     }
 }
