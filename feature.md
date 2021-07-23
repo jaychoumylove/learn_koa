@@ -12,5 +12,5 @@
 - [x] koa router miss register => with in error handle
 - [x] parse request param => use ctx.request.query|ctx.params instead of
 - [ ] add readme
-- [ ] add redis server
+- [x] add redis client
 - [x] log database display message  
