@@ -121,6 +121,4 @@ dist
 .vscode
 
 # migrations
-migrations
-seeds
 knexfile.js
