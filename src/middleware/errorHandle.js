@@ -6,7 +6,6 @@ import {
 import { Context } from 'koa'
 import { StatusCodes } from 'http-status-codes'
 import Miss from '../exception/miss'
-import defaultRestCode from '../exception/defaultRestCode'
 import Success from '../exception/success'
 import config from '../config'
 
@@ -21,8 +20,12 @@ const errorHandle = async (ctx, next) => {
     try {
         writeInfoLog(`${ctx.method} ${ctx.path}: Start.`)
         await next()
-        if (404 === ctx.response.status) throw new Miss({ message: 'Router not found!' })
-        if ('OPTIONS' === ctx.method) throw new Success()
+        if (404 === ctx.response.status) {
+            throw new Miss({ message: 'Router not found!' })
+        }
+        if ('OPTIONS' === ctx.method) {
+            throw new Success()
+        }
     } catch (error) {
         if (error instanceof Base) {
             const {
@@ -52,7 +55,9 @@ const errorHandle = async (ctx, next) => {
             throw error
         }
         ctx.response.body = {
-            ...defaultRestCode.InternalServer,
+            message: 'Server unknown error',
+            errorCode: 9999,
+            data: null,
             requestUrl: `${ctx.method} ${ctx.path}`,
         }
         ctx.response.status = StatusCodes.INTERNAL_SERVER_ERROR

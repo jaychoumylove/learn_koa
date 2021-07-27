@@ -1,14 +1,18 @@
 import { StatusCodes } from 'http-status-codes'
 import Base from './base'
-import DefaultRestCode from './defaultRestCode'
 
 export default class Signature extends Base {
+    message = 'Invalid signature!'
+    errorCode = 10007
+    data = null
+
     /**
      * Generate Signature Error
-     * @param {{message?: String, errorCode?: Number, data?: Object}} data
-     * @param {Number} status
+     * @param {?{message?: String, errorCode?: Number, data?: Object}} data
+     * @param {?Number} status
      */
     constructor (data = {}, status = StatusCodes.UNAUTHORIZED) {
-        super({ ...DefaultRestCode.Signature, ...data }, status)
+        super()
+        this.excepted(data, status)
     }
 }

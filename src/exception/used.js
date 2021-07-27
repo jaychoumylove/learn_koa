@@ -1,13 +1,17 @@
 import Base from './base'
-import DefaultRestCode from './defaultRestCode'
 
 export default class Used extends Base {
+    message = 'Occupied!'
+    errorCode = 10004
+    data = null
+
     /**
      * Generate Used Error
-     * @param {{message?: String, errorCode?: Number, data?: Object}} data
-     * @param {Number} status
+     * @param {?{message?: String, errorCode?: Number, data?: Object}} data
+     * @param {?Number} status
      */
     constructor (data = {}, status = 226) {
-        super({ ...DefaultRestCode.Used, ...data }, status)
+        super()
+        this.excepted(data, status)
     }
 }

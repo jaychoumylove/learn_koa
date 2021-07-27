@@ -1,16 +1,28 @@
 import { StatusCodes } from 'http-status-codes'
-import defaultRestCode from './defaultRestCode'
 
 const allowProps = ['data', 'errorCode', 'message']
 
 export default class Base extends Error {
+    status = StatusCodes.OK
+    message = 'OK'
+    data = null
+    errorCode = 0
+
     /**
      * Generate Base Error
-     * @param {{message?: String, errorCode?: Number, data?: Object}} data
-     * @param {Number} status
+     * @param {?{message?: String, errorCode?: Number, data?: Object}} data
+     * @param {?Number} status
      */
-    constructor (data = defaultRestCode.Success, status = StatusCodes.OK) {
+    constructor (data = null, status = 0) {
         super()
+        if (data || status) {
+            const tempData = !data || JSON.stringify(data) === '{}' ? null: data;
+            const tempStatus = status ? status: null;
+            this.excepted(tempData, tempStatus);
+        }
+    }
+
+    excepted (data = {}, status = StatusCodes.OK) {
         if (data instanceof Object && data) {
             allowProps.map((item) => {
                 if (data.hasOwnProperty(item)) {
@@ -19,6 +31,8 @@ export default class Base extends Error {
             })
         }
 
-        this.status = status
+        if (status) {
+            this.status = status
+        }
     }
 }
