@@ -6,6 +6,14 @@ dotEnv.config()
 
 let clients = {}
 
+const setClients = (tempClients) => {
+    clients = tempClients;
+}
+
+const getClients = () => {
+    return clients;
+}
+
 const initMq = async () => {
     const conn = await getConnection();
 
@@ -17,17 +25,13 @@ const initMq = async () => {
     }
 }
 
-const getClients = () => {
-    return clients;
-}
-
 if (Boolean(process.env.RABBIT_MQ_STATUS)) {
     initMq().then(res => {
-        clients = res;
+        setClients(res);
     });
 }
 
-export default {
+export {
     initMq,
     getClients
 }
