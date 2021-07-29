@@ -31,7 +31,7 @@ export default class Test extends Base {
         mobile: Joi.alternatives(
             Joi.string(),
             Joi.number()
-        ).custom(mobileRule()).required().messages({
+        ).custom(mobileRule).required().messages({
             'alternatives.types': 'Invalid Mobile!',
             'any.required': 'Please enter mobile!',
             'any.custom': 'Invalid Mobile!'
@@ -41,7 +41,7 @@ export default class Test extends Base {
             'any.required': 'Please select sex!',
             'any.only': "Should be 0 or 1"
         }),
-        ids: Joi.string().required().custom(IdsRule()).messages({
+        ids: Joi.string().required().custom(IdsRule).messages({
             'string.base': 'Invalid Ids!',
             'any.required': 'Please enter ids!',
             'any.custom': 'Invalid Ids!'
@@ -51,7 +51,7 @@ export default class Test extends Base {
             'any.required': 'Please enter Start date!',
             'any.custom': 'Invalid Start Date!'
         }),
-        endDate: Joi.string().required().custom(DateRule()).messages({
+        endDate: Joi.string().required().custom(DateRule).messages({
             'string.base': 'Invalid End date!',
             'any.required': 'Please enter End date!',
             'any.custom': 'Invalid End Date!'
@@ -61,7 +61,7 @@ export default class Test extends Base {
             'any.required': 'Please enter domain!',
             'string.domain': 'domain err'
         }),
-        url: Joi.string().required().custom(UrlRule()).messages({
+        url: Joi.string().required().custom(UrlRule).messages({
             'string.base': 'Invalid url!',
             'any.required': 'Please enter url!',
             'any.custom': 'Invalid Url!'
