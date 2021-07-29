@@ -7,6 +7,7 @@
     "@koa/cors": "^3.1.0",
     "@koa/router": "^10.0.0",
     "Faker": "^0.7.2",
+    "amqplib": "^0.8.0",
     "async-redis": "^2.0.0",
     "babel-runtime": "^6.26.0",
     "bookshelf": "^1.2.0",

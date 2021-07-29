@@ -10,9 +10,13 @@ import {
 
 initLogger()
 
+import './messageQueue/index'
+
 const app = new Koa()
 app.use(middleware)
 
-app.listen(3000, async () => {
-    writeInfoLog('server is running at http://localhost:3000')
+const port = process.env.PORT || 3000;
+
+app.listen(port, async () => {
+    writeInfoLog('server is running at http://localhost:' + port)
 })

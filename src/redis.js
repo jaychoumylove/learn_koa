@@ -6,15 +6,18 @@ import {
 
 dotEnv.config()
 
-const RedisClient = createClient({
-    db: process.env.REDIS_DB,
-    host: process.env.REDIS_HOST,
-    port: process.env.REDIS_PORT
-})
+let RedisClient = null
 
-RedisClient.on('error', err => {
-    writeErrorLog('[REDIS]')
-    writeErrorLog(err)
-})
+if (Boolean(process.env.REDIS_STATUS)) {
+    RedisClient = createClient({
+        db: process.env.REDIS_DB,
+        host: process.env.REDIS_HOST,
+        port: process.env.REDIS_PORT
+    })
+    RedisClient.on('error', err => {
+        writeErrorLog('[REDIS]')
+        writeErrorLog(err)
+    })
+}
 
 export default RedisClient
