@@ -13,4 +13,5 @@
 - [x] parse request param => use ctx.request.query|ctx.params instead of
 - [ ] add readme
 - [x] add redis client
+- [x] add rabbitMQ client
 - [x] log database display message  
