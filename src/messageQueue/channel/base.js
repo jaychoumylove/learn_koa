@@ -13,46 +13,37 @@ export default class Base {
      */
     routes = {}
 
-    exampleRoutes = {
-        'topic_logs': {
-            name: 'topic_logs',
-            type: 'topic',
-            option: {
-                durable: false
-            }
-        }
-    }
+    // exampleRoutes = {
+    //     'topic_logs': {
+    //         name: 'topic_logs',
+    //         type: 'topic',
+    //         option: {
+    //             durable: false
+    //         }
+    //     }
+    // }
 
     /**
      * @type {Object|Array}
      */
     queues = {}
 
-    exampleQueues = {
-        'report': {
-            name: undefined,
-            createOption: {
-                exclusive: true
-            },
-            bindExchange: 'topic_logs',
-            bindKey: [
-                '#'
-            ],
-            consume: console.log,
-            consumeOption: {
-                noAck: true
-            }
-        }
-    }
-
-    /**
-     * @param {ChannelModel|null} connection
-     */
-    constructor (connection = null) {
-        if (connection) {
-            this.init(connection)
-        }
-    }
+    // exampleQueues = {
+    //     'report': {
+    //         name: undefined,
+    //         createOption: {
+    //             exclusive: true
+    //         },
+    //         bindExchange: 'topic_logs',
+    //         bindKey: [
+    //             '#'
+    //         ],
+    //         consume: console.log,
+    //         consumeOption: {
+    //             noAck: true
+    //         }
+    //     }
+    // }
 
     async init (connection) {
         this.connection = connection
