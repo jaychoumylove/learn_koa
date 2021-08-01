@@ -42,9 +42,9 @@ const errorHandle = async (ctx, next) => {
     writeErrorLog(`${ctx.method} ${ctx.path}:spend: ${spendTime}ms. `);
     writeErrorLog(error);
 
-    // if (config.devVar.indexOf(process.env.APP_ENV) > -1) {
-    //   throw error;
-    // }
+    if (config.devVar.indexOf(process.env.APP_ENV) > -1) {
+      throw error;
+    }
     getClients().EmailClient.publish("exceptions", "exception", error.message);
     ctx.response.body = {
       message: "Server unknown error",
