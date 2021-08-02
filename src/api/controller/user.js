@@ -59,7 +59,7 @@ const getListWithPage = async (ctx) => {
 const update = async (ctx) => {
   new Id().check(ctx.params);
   // todo remove if your test over
-  new Test().check(ctx.request.body);
+  // new Test().check(ctx.request.body);
   const { id } = ctx.params;
   const { first_name, last_name } = ctx.request.body;
   let info = await User.where("id", id).fetch();

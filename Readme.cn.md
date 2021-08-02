@@ -7,6 +7,8 @@
 ## 目录
 
 * [Intro](#Intro)
+    * [directory structure](#项目结构)
+    * [get started](#快速开始)
 * [Router](#Router)
 * [Controller](#Controller)
 * [ORM](#ORM)
@@ -23,6 +25,7 @@
 * [Exception](#Exception)
     * [CustomException](#CustomException)
     * [Usage](#exceptionusage)
+* [Middlerware](#Middlerware)
 * [Log](#Log)
 * [MQ](#MQ)
 * [Redis](#Redis)
@@ -36,49 +39,41 @@
 - 独立的路由处理
 - 强大的参数校验
 - 系统的日志记录
-- `redis`客户端以及`rabbitMQ`客户端
+- `redis`客户端
+- `rabbitMQ`客户端
+- `nodeMailer`客户端
 
 ### 项目结构
 
 ```  
 |-- project
-    |-- .babelrc
-    |-- .env
-    |-- .gitignore
-    |-- Readme.cn.md
-    |-- Readme.md
-    |-- feature.md
-    |-- knexfile.example.js
-    |-- knexfile.js
-    |-- package.json
-    |-- yarn.lock
-    |-- logs
-    |   |-- application
+    |-- logs - 文件日志记录
+    |   |-- application - 系统日志
     |   |   |-- 2021-07-30.log
-    |   |-- debug
+    |   |-- debug - DEBUG调试日志
     |   |   |-- 2021-07-23.log
-    |   |-- error
+    |   |-- error - 错误体质
     |   |   |-- 2021-07-30.log
-    |   |-- warn
+    |   |-- warn - 警告日志
     |       |-- 2021-07-29.log
     |-- src
-        |-- app.js
-        |-- config.js
-        |-- nodeMailer.js
-        |-- redis.js
-        |-- util.js
-        |-- api
-        |   |-- controller
+        |-- app.js - 入口文件
+        |-- config.js - 配置文件
+        |-- nodeMailer.js - mail客户端
+        |-- redis.js - redis客户端
+        |-- util.js - 辅助工具
+        |-- api - api核心业务
+        |   |-- controller - 控制层
         |       |-- mq.js
         |       |-- redis.js
         |       |-- user.js
-        |-- database
-        |   |-- knex.js
-        |   |-- migrations
+        |-- database - 数据库
+        |   |-- knex.js - knex客户端
+        |   |-- migrations - 数据库迁移
         |   |   |-- 20210531024816_create_table_person.js
-        |   |-- seeds
+        |   |-- seeds - 数据库填充
         |       |-- add_users.js
-        |-- exception
+        |-- exception - 异常
         |   |-- base.js
         |   |-- done.js
         |   |-- forbidden.js
@@ -92,26 +87,26 @@
         |   |-- success.js
         |   |-- token.js
         |   |-- used.js
-        |-- messageQueue
-        |   |-- connection.js
-        |   |-- index.js
-        |   |-- channel
+        |-- messageQueue - 消息队列
+        |   |-- connection.js - 服务链接
+        |   |-- index.js - 服务入口
+        |   |-- channel - 服务channel
         |       |-- base.js
         |       |-- email.js
         |       |-- normal.js
-        |-- middleware
-        |   |-- compose.js
+        |-- middleware - 中间件
+        |   |-- compose.js - 中间件打包
         |   |-- cors.js
         |   |-- errorHandle.js
         |   |-- logger.js
         |   |-- router.js
-        |-- model
+        |-- model - 模型层
         |   |-- user.js
-        |-- router
+        |-- router - 路由层
         |   |-- mqRouter.js
         |   |-- redisRouter.js
         |   |-- userRouter.js
-        |-- rule
+        |-- rule - 验证规则
         |   |-- Ids.js
         |   |-- date.js
         |   |-- example.js
@@ -119,18 +114,28 @@
         |   |-- regexp.js
         |   |-- sortBy.js
         |   |-- url.js
-        |-- validation
+        |-- validation - 验证器
             |-- base.js
             |-- id.js
             |-- ids.js
             |-- page.js
             |-- test.js
+    |-- .babelrc - babel配置
+    |-- .env - 环境变量配置
+    |-- .gitignore
+    |-- Readme.cn.md
+    |-- Readme.md
+    |-- feature.md
+    |-- knexfile.example.js
+    |-- knexfile.js - knexfile配置
+    |-- package.json
+    |-- yarn.lock
 ```
 
 ### 快速开始
 
 - 克隆这个项目到你的本地
-```bash
+```git
 git clone git@github.com:jaychoumylove/learn_koa.git
 ```
 - 进入项目目录并且安装依赖
@@ -161,43 +166,108 @@ const userRouter = (router) => {
 export default userRouter;
 ```
 
-* Webapp server → [web.js](template/web.js)
-* API server → [api.js](template/api.js)
-* Job scheduler → [bree.js](template/bree.js)
-* Proxy server → [proxy.js](template/proxy.js)
+### Controller
 
-### Front-end
+这里是你写核心业务的区域，书写规范如下：
 
-* Browser linting using [eslint-plugin-compat][] and [browserslist][] (see [.browserslistrc](template/.browserslistrc) for the default config)
-* [Pug][] template engine (you can easily use [Moon][], [Vue][], [React][], or [Angular][], though typically [you aren't going to need it][yagni])
-* [Gulp][] (latest version 4.x)
-* [Sass][]
-* [PostCSS][] (with [font-magician][], [import-url][], [font-grabber][], [base64][], and [cssnext][] pre-configured)
-* [Bootstrap][]
-* [Font Awesome][font-awesome]
-* [SpinKit][]
-* [SweetAlert2][]
-* [Dense][]
-* [Waypoints][]
-* [LiveReload][]
-* …
+- 入参有且仅有一个参数 `ctx` 即`koa`上下文
+- `ctx`: `readonly`
+- 每一个入口不能用`return`返回，必须抛出异常，如：`throw new Success()`，如果业务处理失败则抛出其他失败异常，关于异常会在[异常](#Exception)里面讲
+- 如上，如果有被捕获的异常请直接抛出，不用担心应用崩溃问题，框架底层已经处理了异常，详细可以看[中间件](#Middlerware)
 
-### Back-end
+示例如下：
+```js
+import Success from "../../exception/success";
+import Id from "../../validation/id";
+import User from "../../model/user";
 
-* Redis, sessions, and flash toast and modal [SweetAlert2][] messages (uses [ioredis][] which has support for [Cluster][redis-cluster], [Sentinel][redis-sentinel], and more)
-* Koa-based webapp and API servers (uses HTTP/2 for production!)
-* Pagination built-in (using [ctx-paginate][])
-* RESTful API with BasicAuth and versioning
-* Automated job scheduler with cron and human-readable syntax (backed by [Mongoose][] and [Bree][])
-* Passport-based authentication and group-based (Unix-like) permissioning
-* Stripe-inspired error handling
-* Mongoose and MongoDB with common database plugins
-* Email template engine with [Nodemailer][] and local rendering
-* Proxy eliminates need for Nginx reverse-proxy or Apache virtual hosts
-* Multilingual through built-in i18n translation support ([see configuration](#translation-configuration))
-* Automatic phrase translation with Google Translate
-* Sitemap generator for simple SEO
-* …
+const patch = async (ctx) => {
+  new Id().check(ctx.params);
+  const { id } = ctx.params;
+  const { first_name } = ctx.request.body;
+  await User.where("id", id).save(
+    { first_name },
+    { patch: true, require: false }
+  );
+  throw new Success();
+};
+
+// ...other functions
+
+export { patch }
+```
+
+### ORM
+
+项目ORM基于`Knex`和`Bookshelf`
+
+#### ORMConfigure
+
+- 启动项目前你需要配置`knexfile`
+- 如果你需要数据库迁移和填充，请在`knexfile`分别配置`migrations`和`seeds`
+
+#### model
+
+你的所有模型文件请放在`src/model`下，示例如下：
+```js
+// src/model/user.js
+import { bookshelfApp } from '../database/knex'
+
+const User = bookshelfApp.model('User', {
+    hasTimestamps: true,
+    tableName: 'users',
+    hidden: ['password', 'deleted_at'],
+})
+
+export default User
+```
+
+`src/database/knex.js`的文件内容不建议你更改，除非你要安装`bookshelf`插件。
+
+#### ORMCURD
+
+- `getlist`
+```js
+const list = await User.where("id", "in", [1,3,5])
+    .orderBy("id", "desc")
+    .fetchAll();
+```
+- `getlistWithPage`
+```js
+const pageList = await new User().orderBy("id", "desc").fetchPage({
+    page: 1,
+    pageSize: 15,
+});
+```
+- `getFirstRow`
+```js
+let info = await User.where("id", 2).fetch();
+```
+- `updateExistRow`
+```js
+let info = await User.where("id", 2).fetch();
+info = await info.save({
+    first_name: "first_name",
+    last_name: "last_name",
+});
+```
+- `updateRowWithWhere`
+```js
+await User.where("id", 4).save(
+    { name: "salli" },
+    { patch: true, require: false }
+);
+```
+- `updateRowWithWhere`
+```js
+const created = await new User().save({
+    first_name: "first_name",
+    last_name: "last_name",
+});
+await User.where("id", 6).destroy({
+    require: false,
+});
+```
 
 ### Translation
 
