@@ -15,7 +15,6 @@ import { bookshelfApp } from "../../database/knex";
  * @param {Context} ctx
  */
 const getInfo = async (ctx) => {
-  throw new Error("something was wrong!");
   new Id().check(ctx.params);
   const { id } = ctx.params;
   const info = await User.where("id", id).fetch();
