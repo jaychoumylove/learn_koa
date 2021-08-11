@@ -18,13 +18,11 @@ export default class Base {
         if (!strict) {
             validateData = this.filterValidateData(validateData);
         }
-        const { value, error } = this.schema.validate(validateData)
+        const { error } = this.schema.validate(validateData)
         if (error) {
             throw new Parameter({
                 message: error.message
             })
-        } else {
-            return true
         }
     }
 
