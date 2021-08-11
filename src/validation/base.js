@@ -13,8 +13,12 @@ export default class Base {
         return this.defaultSchema
     }
 
-    check (data) {
-        const { value, error } = this.schema.validate(data)
+    check (data, strict = false) {
+        let validateData = data;
+        if (!strict) {
+            validateData = this.filterValidateData(validateData);
+        }
+        const { value, error } = this.schema.validate(validateData)
         if (error) {
             throw new Parameter({
                 message: error.message
@@ -22,5 +26,17 @@ export default class Base {
         } else {
             return true
         }
+    }
+
+    filterValidateData (data) {
+        const keys = this.schema['$_terms'].keys.map(i => i.key);
+        let validateData = {};
+        Object.keys(data).map(key => {
+            if (keys.indexOf(key) > -1) {
+                validateData[key] = data[key]
+            }
+        })
+
+        return validateData;
     }
 }
