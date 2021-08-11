@@ -466,6 +466,66 @@ const throwIt = async (ctx) => {
     throw new Error('Just throw an error')
 };
 ```
+与此同时，自定义的每一个异常都代表一个`Response`，以`src/exception/parameter.js`内容示例:
+```js
+import { StatusCodes } from 'http-status-codes'
+import Base from './base'
+
+export default class Parameter extends Base {
+    message = 'Invalid parameters!'
+    errorCode = 10001
+    data = null
+
+    /**
+     * Generate Parameter Error
+     * @param {?{message?: String, errorCode?: Number, data?: Object}} data
+     * @param {?Number} status
+     */
+    constructor (data = {}, status = StatusCodes.BAD_REQUEST) {
+        super()
+        this.excepted(data, status)
+    }
+}
+```
+其中，`message`，`errorCode`，`data` 为三个基础的返回参数，所有的返回都会基于这三个返回参数。
+
+#### CustomException
+
+如上所说，自定义异常十分简单：
+```js
+// src/exception/custom.js
+import { StatusCodes } from 'http-status-codes'
+import Base from './base'
+
+export default class Custom extends Base {
+    message = 'Custom Exception!'
+    errorCode = 12345
+    data = null
+
+    /**
+     * Generate Custom Error
+     * @param {?{message?: String, errorCode?: Number, data?: Object}} data
+     * @param {?Number} status
+     */
+    constructor (data = {}, status = StatusCodes.BAD_REQUEST) {
+        super()
+        this.excepted(data, status)
+    }
+}
+```
+
+#### exceptionusage
+
+在控制器中的使用十分简单，就像抛出原生异常一样:
+```js
+/**
+ * get info by id
+ * @param {Context} ctx
+ */
+const throwCustom = async (ctx) => {
+  throw new Custom();
+};
+```
 
 ## License
 
