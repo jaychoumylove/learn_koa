@@ -2,11 +2,15 @@ import compose from 'koa-compose'
 import errorHandle from './errorHandle'
 import router from './router'
 import corsHandle from './cors'
+import responseTime from 'koa-response-time'
 import NotImplemented from '../exception/notImplemented'
 import MethodNotAllowed from '../exception/methodNotAllowed'
 import bodyParser from 'koa-bodyparser'
+import staticHandle from './static'
 
 const all = [
+    responseTime({ hrtime: true }),
+    staticHandle,
     errorHandle,
     corsHandle,
     bodyParser(),
