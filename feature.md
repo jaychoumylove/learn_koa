@@ -17,7 +17,7 @@
     - [x] add rabbitMQ client
     - [x] log database display message
     - [ ] use http/2
-    - [ ] add static place
+    - [x] add static place
     - [ ] download retry
 
 - database

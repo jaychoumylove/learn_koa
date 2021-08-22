@@ -91,6 +91,7 @@ dist
 # public
 
 public/images/*
+public/static/*
 
 config/certificate/*
 
