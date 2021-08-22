@@ -18,7 +18,7 @@
     - [x] log database display message
     - [ ] use http/2
     - [x] add static place
-    - [ ] download retry
+    - ~~[ ] download retry~~
 
 - database
     - [ ] add sequelize ORM
