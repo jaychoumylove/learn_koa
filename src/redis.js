@@ -2,7 +2,7 @@ import { createClient } from 'async-redis'
 import dotEnv from 'dotenv'
 import {
     writeErrorLog,
-} from './middleware/logger'
+} from './logger'
 
 dotEnv.config()
 

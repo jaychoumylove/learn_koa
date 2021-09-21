@@ -6,7 +6,7 @@ dotEnv.config()
 import {
     initLogger,
     writeInfoLog
-} from './middleware/logger'
+} from './logger'
 
 initLogger()
 

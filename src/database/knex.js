@@ -7,7 +7,7 @@ import {
     writeDebugLog,
     writeErrorLog,
     writeWarnLog
-} from '../middleware/logger'
+} from '../logger'
 
 dotEnv.config()
 

@@ -27,10 +27,13 @@ export default class Base {
     }
 
     filterValidateData (data) {
+        /**
+         * @var {Array} keys
+         */
         const keys = this.schema['$_terms'].keys.map(i => i.key);
         let validateData = {};
         Object.keys(data).map(key => {
-            if (keys.indexOf(key) > -1) {
+            if (keys.includes(key)) {
                 validateData[key] = data[key]
             }
         })

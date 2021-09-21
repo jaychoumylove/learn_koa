@@ -52,7 +52,7 @@
     |   |   |-- 2021-07-30.log
     |   |-- debug - DEBUG调试日志
     |   |   |-- 2021-07-23.log
-    |   |-- error - 错误体质
+    |   |-- error - 错误日志
     |   |   |-- 2021-07-30.log
     |   |-- warn - 警告日志
     |       |-- 2021-07-29.log
@@ -514,7 +514,7 @@ export default class Custom extends Base {
 }
 ```
 
-#### exceptionusage
+#### Exception Usage
 
 在控制器中的使用十分简单，就像抛出原生异常一样:
 ```js
@@ -525,6 +525,197 @@ export default class Custom extends Base {
 const throwCustom = async (ctx) => {
   throw new Custom();
 };
+```
+
+### Middlerware
+
+所有的中间件必须放在`src/middleware`下，且在`compose.js`里面注册中间件。
+
+目前框架内置的中间件有(洋葱模型从外到里)：
+
+- `koa-response-time` 记录响应时间
+- `koa-send` 设置静态文件目录
+- `errorHandle` 由`try...catch`包裹的异常处理，日志记录，路由404处理，`Option`请求处理等
+- `@koa/cors` 请求跨域处理
+- `koa-bodyparser` 解构`body`里面的`json`数据
+- `router` 每个`router` 处理
+
+所有的中间件统一交给`koa-compose`处理。
+如果你想要新增合适的中间件，请在合适的位置添加。
+
+### Log
+
+框架基于`log4js` 加入了强大的日志系统。日志记录放在`logs`下，默认按级别分别设置如下四个目录存放日志文件
+- `application` 日志记录合集
+- `debug` `debug`级别的调试日志
+- `warn` `warn`级别的警告日志
+- `error` `error`级别的错误|异常日志
+
+且每个目录下的文件按年月日拆分。
+
+主要逻辑在`src/logger.js` 下，暴露多个`api`:`writeInfoLog`,`writeErrorLog`,`writeDebugLog`,`writeLog`等，你可以根据场景写入日志。
+
+> 测试环境以及开发环境下默认开启数据库debug模式
+
+如下是一个`PUT /user/6`的请求日志：
+```log
+[2021-07-29T10:10:46.619] [INFO] application - PUT /user/6: Start.
+[2021-07-29T10:10:46.811] [DEBUG] application - [DATABASE]
+[2021-07-29T10:10:46.812] [DEBUG] application - {
+  method: 'select',
+  options: {},
+  timeout: false,
+  cancelOnTimeout: false,
+  bindings: [ '6', 1 ],
+  __knexQueryUid: 'T-QJlBtZpf2f_t5Un4ziw',
+  sql: 'select `users`.* from `users` where `id` = ? and `users`.`deleted_at` is null limit ?'
+}
+[2021-07-29T10:10:46.846] [DEBUG] application - [DATABASE]
+[2021-07-29T10:10:46.848] [DEBUG] application - {
+  method: 'update',
+  options: {},
+  timeout: false,
+  cancelOnTimeout: false,
+  bindings: [
+    'alal',
+    'hahha',
+    null,
+    2021-07-22T07:50:50.000Z,
+    2021-07-23T02:11:28.000Z,
+    null,
+    6
+  ],
+  __knexQueryUid: '0YHu_JrBCINsM6rFm1QWk',
+  sql: 'update `users` set `first_name` = ?, `last_name` = ?, `password` = ?, `created_at` = ?, `updated_at` = ?, `deleted_at` = ? where `id` = ?'
+}
+[2021-07-29T10:10:46.857] [DEBUG] application - [DATABASE]
+[2021-07-29T10:10:46.857] [DEBUG] application - {
+  method: 'select',
+  options: {},
+  timeout: false,
+  cancelOnTimeout: false,
+  bindings: [ 6, 1 ],
+  __knexQueryUid: 'elQIlpOPTh1l8MOPTsoTL',
+  sql: 'select `users`.* from `users` where `users`.`id` = ? and `users`.`deleted_at` is null limit ?'
+}
+[2021-07-29T10:10:46.860] [INFO] application - PUT /user/6: OK; spend: 241ms
+```
+
+### MQ
+
+消息队列是本框架扩展的一个内容，你可以不使用它。
+在`env`里面配置：
+```
+RABBIT_MQ_STATUS=1 # 是否启用
+RABBIT_MQ_HOST=localhost
+RABBIT_MQ_PORT=5672
+RABBIT_MQ_USER=guest
+RABBIT_MQ_PASS=guest
+```
+
+#### 创建通道
+
+在`src/messageQueue/channel`下面创建文件，示例：
+```js
+import Base from './base'
+
+export default class Normal extends Base {
+    // 定义你的路由
+    routes = {
+        'topic_logs': {
+            name: 'topic_logs',
+            type: 'topic',
+            option: {
+                durable: false
+            }
+        }
+    }
+
+    // 定义你的消费队列
+    queues = {
+        'report': {
+            name: undefined,
+            createOption: {
+                exclusive: true
+            },
+            bindExchange: 'topic_logs', // 绑定的路由
+            bindKey: [ // 绑定的关键字
+                '#'
+            ],
+            consume: this.consumeReport, // 消费的执行函数
+            consumeOption: {
+                noAck: true
+            }
+        }
+    }
+
+    consumeReport (msg) {
+        console.log(" [x] %s:'%s'", msg.fields.routingKey, msg.content.toString());
+    }
+}
+```
+
+具体逻辑请看`src/messageQueue/channel/base.js`，封装比较粗浅。
+
+#### 消费
+
+消费的使用比较简单，提取对应的客户端执行消费即可，示例：
+```js
+// src/api/controller/mq.js
+import Success from "../../exception/success";
+import { getClients } from "../../messageQueue/index";
+
+const publish = async (ctx) => {
+  const { exchange, key, msg } = ctx.request.body;
+  getClients().NormalClient.publish(exchange, key, msg);
+  throw new Success();
+};
+
+export default {
+  publish,
+};
+```
+
+### Redis
+
+Redis是本框架扩展的一个内容，你可以不使用它。
+在`env`里面配置：
+```
+REDIS_STATUS=1 # 是否启用
+REDIS_HOST=127.0.0.1
+REDIS_PORT=6379
+REDIS_DB=1
+```
+
+使用示例：
+```js
+// src/api/controller/redis.js
+import Success from '../../exception/success'
+import RedisClient from '../../redis'
+
+const get = async (ctx) => {
+    const { key } = ctx.request.query
+    const val = await RedisClient.get(key)
+    throw new Success(val)
+}
+
+const save = async (ctx) => {
+    const { key, value } = ctx.request.body
+    await RedisClient.set(key, value)
+    throw new Success()
+}
+
+const del = async (ctx) => {
+    const { key } = ctx.request.query
+    await RedisClient.del(key)
+    throw new Success()
+}
+
+export default {
+    save,
+    del,
+    get
+}
 ```
 
 ## License

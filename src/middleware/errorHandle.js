@@ -1,5 +1,5 @@
 import Base from "../exception/base";
-import { writeErrorLog, writeInfoLog } from "./logger";
+import { writeErrorLog, writeInfoLog } from "../logger";
 import { Context } from "koa";
 import { StatusCodes } from "http-status-codes";
 import Miss from "../exception/miss";
