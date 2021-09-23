@@ -62,6 +62,7 @@
         |-- nodeMailer.js - mail客户端
         |-- redis.js - redis客户端
         |-- util.js - 辅助工具
+        |-- logger.js - 日志类
         |-- api - api核心业务
         |   |-- controller - 控制层
         |       |-- mq.js
@@ -98,7 +99,6 @@
         |   |-- compose.js - 中间件打包
         |   |-- cors.js
         |   |-- errorHandle.js
-        |   |-- logger.js
         |   |-- router.js
         |-- model - 模型层
         |   |-- user.js
