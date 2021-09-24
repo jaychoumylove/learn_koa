@@ -1,6 +1,7 @@
 import user from '../controller/user'
+import Router from '@koa/router';
 
-const userRouter = (router) => {
+const userRouter = (router: Router) => {
     router.get('/user/:id', user.getInfo);
     router.get('/user_list', user.getList);
     router.get('/user_page', user.getListWithPage);
