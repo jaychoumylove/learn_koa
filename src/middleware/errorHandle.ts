@@ -24,14 +24,6 @@ const errorHandle = async (ctx, next) => {
             throw new Success();
         }
     } catch (error) {
-        writeErrorLog('Catch');
-        writeErrorLog(error);
-        writeErrorLog('error instanceof Base');
-        writeErrorLog(error instanceof Base);
-        // writeErrorLog('error instanceof Error');
-        // writeErrorLog(error instanceof Error);
-        writeErrorLog('error instanceof Error');
-        writeErrorLog(error instanceof Error);
         if (error instanceof Base) {
             const { status, message, data, errorCode } = error;
             ctx.response.body = {

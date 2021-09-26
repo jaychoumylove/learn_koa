@@ -18,6 +18,8 @@ export default class Base extends Error {
      */
     constructor(data = null, status = 0) {
         super()
+        // Fixed compile to es5 extends Class bug. see https://github.com/microsoft/TypeScript/wiki/FAQ#why-doesnt-extending-built-ins-like-error-array-and-map-work
+        Object.setPrototypeOf(this, new.target.prototype);
         if (data || status) {
             const tempData = (!data || JSON.stringify(data) === '{}') ? {} : data;
             const tempStatus = status ? status : null;
@@ -27,11 +29,11 @@ export default class Base extends Error {
 
     public excepted = (data = {}, status = StatusCodes.OK) => {
         if (data instanceof Object && data) {
-            allowProps.map((item) => {
-                if (data.hasOwnProperty(item)) {
-                    this[item] = data[item]
+            for (const allowProp of allowProps) {
+                if (data.hasOwnProperty(allowProp)) {
+                    this[allowProp] = data[allowProp]
                 }
-            })
+            }
         }
 
         if (status) {
