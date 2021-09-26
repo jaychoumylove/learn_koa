@@ -8,9 +8,6 @@ export default class Base {
         this.defaultSchema = value
     }
 
-    /**
-     * @returns {ObjectSchema}
-     */
     get schema() {
         return this.defaultSchema
     }
@@ -29,9 +26,6 @@ export default class Base {
     }
 
     filterValidateData(data) {
-        /**
-         * @var {Array} keys
-         */
         const keys: string[] = this.schema.$_terms.keys.map(i => i.key);
         let validateData = {};
         Object.keys(data).map(key => {
