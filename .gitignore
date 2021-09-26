@@ -127,3 +127,7 @@ config/certificate/*
 
 # migrations
 knexfile.js
+
+build/
+tmp/
+temp/
