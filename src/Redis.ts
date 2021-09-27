@@ -9,12 +9,12 @@ config()
 let RedisClient = null
 
 if (Boolean(process.env.REDIS_STATUS)) {
-    const redisClient = createClient({
+    RedisClient = createClient({
         db: process.env.REDIS_DB,
         host: process.env.REDIS_HOST,
         port: process.env.REDIS_PORT,
     });
-    redisClient.on('error', err => {
+    RedisClient.on('error', err => {
         writeErrorLog('[REDIS]')
         writeErrorLog(err)
     })

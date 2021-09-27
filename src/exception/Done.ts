@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes'
-import Base from './Base'
+import Base, { ErrorProps } from './Base'
 
 export default class Done extends Base {
     message = 'Already done!'
@@ -8,12 +8,7 @@ export default class Done extends Base {
 
     data = null
 
-    /**
-     * Generate Done Error
-     * @param {?{message?: String, errorCode?: Number, data?: Object}} data
-     * @param {?Number} status
-     */
-    constructor(data = {}, status = StatusCodes.CREATED) {
+    constructor(data: ErrorProps = null, status: StatusCodes = StatusCodes.CREATED) {
         super()
         this.excepted(data, status)
     }

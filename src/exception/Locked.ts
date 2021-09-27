@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes'
-import Base from './Base'
+import Base, { ErrorProps } from './Base'
 
 export default class Locked extends Base {
     message = 'Locked!'
@@ -8,12 +8,7 @@ export default class Locked extends Base {
 
     data = null
 
-    /**
-     * Generate Locked Error
-     * @param {?{message?: String, errorCode?: Number, data?: Object}} data
-     * @param {?Number} status
-     */
-    constructor(data = {}, status = StatusCodes.LOCKED) {
+    constructor(data: ErrorProps = null, status: StatusCodes = StatusCodes.LOCKED) {
         super()
         this.excepted(data, status)
     }

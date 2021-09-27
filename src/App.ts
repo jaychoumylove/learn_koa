@@ -11,6 +11,7 @@ import {
 initLogger()
 
 import './messageQueue/Index'
+import './Redis'
 import { createConnection } from 'typeorm';
 
 const app = new Koa()

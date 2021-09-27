@@ -6,16 +6,13 @@
   "dependencies": {
     "@koa/cors": "^3.1.0",
     "@koa/router": "^10.0.0",
+    "@types/nodemailer": "^6.4.4",
     "Faker": "^0.7.2",
     "amqplib": "^0.8.0",
     "async-redis": "^2.0.0",
-    "babel-runtime": "^6.26.0",
-    "bookshelf": "^1.2.0",
-    "bookshelf-paranoia": "^0.13.1",
     "dotenv": "^9.0.1",
     "http-status-codes": "^2.1.4",
     "joi": "^17.4.1",
-    "knex": "^0.95.6",
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
     "koa-compose": "^4.1.0",
@@ -32,9 +29,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.0",
-    "@babel/node": "^7.13.13",
-    "@babel/preset-env": "^7.14.1",
+    "@types/amqplib": "^0.8.2",
     "@types/koa__cors": "^3.0.3",
     "@types/koa__router": "^8.0.8",
     "@types/node": "^16.9.6",

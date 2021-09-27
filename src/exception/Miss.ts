@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes'
-import Base from './Base'
+import Base, { ErrorProps } from './Base'
 
 export default class Miss extends Base {
     message = 'Miss!'
@@ -8,12 +8,7 @@ export default class Miss extends Base {
 
     data = null
 
-    /**
-     * Generate Miss Error
-     * @param {?{message?: String, errorCode?: Number, data?: Object}} data
-     * @param {?Number} status
-     */
-    constructor(data = {}, status = StatusCodes.NOT_FOUND) {
+    constructor(data: ErrorProps = null, status: StatusCodes = StatusCodes.NOT_FOUND) {
         super()
         this.excepted(data, status)
     }

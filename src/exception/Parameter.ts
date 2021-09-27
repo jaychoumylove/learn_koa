@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes'
-import Base from './Base'
+import Base, { ErrorProps } from './Base'
 
 export default class Parameter extends Base {
     message = 'Invalid parameters!'
@@ -8,12 +8,7 @@ export default class Parameter extends Base {
 
     data = null
 
-    /**
-     * Generate Parameter Error
-     * @param {?{message?: String, errorCode?: Number, data?: Object}} data
-     * @param {?Number} status
-     */
-    constructor(data = {}, status = StatusCodes.BAD_REQUEST) {
+    constructor(data: ErrorProps = null, status: StatusCodes = StatusCodes.BAD_REQUEST) {
         super()
         this.excepted(data, status)
     }

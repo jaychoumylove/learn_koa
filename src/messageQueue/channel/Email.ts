@@ -1,6 +1,7 @@
 import Base from './Base';
 import nodemailer from 'nodemailer';
 import { writeInfoLog, writeErrorLog } from '../../Logger';
+import { ConsumeMessage } from "amqplib/properties";
 
 export default class Normal extends Base {
     routes = {
@@ -28,7 +29,7 @@ export default class Normal extends Base {
         },
     };
 
-    async consumeException(msg) {
+    async consumeException(msg: ConsumeMessage | null) {
         try {
             // create reusable transporter object using the default SMTP transport
             let transporter = nodemailer.createTransport(process.env.MAILER_DSN);

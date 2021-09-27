@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes'
-import Base from './Base'
+import Base, { ErrorProps } from './Base'
 
 export default class NotImplemented extends Base {
     message = 'Not Implemented!'
@@ -8,12 +8,7 @@ export default class NotImplemented extends Base {
 
     data = null
 
-    /**
-     * Generate NotImplemented Error
-     * @param {?{message?: String, errorCode?: Number, data?: Object}} data
-     * @param {?Number} status
-     */
-    constructor(data = {}, status = StatusCodes.NOT_IMPLEMENTED) {
+    constructor(data: ErrorProps = null, status: StatusCodes = StatusCodes.NOT_IMPLEMENTED) {
         super()
         this.excepted(data, status)
     }

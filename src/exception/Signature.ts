@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes'
-import Base from './Base'
+import Base, { ErrorProps } from './Base'
 
 export default class Signature extends Base {
     message = 'Invalid signature!'
@@ -8,12 +8,7 @@ export default class Signature extends Base {
 
     data = null
 
-    /**
-     * Generate Signature Error
-     * @param {?{message?: String, errorCode?: Number, data?: Object}} data
-     * @param {?Number} status
-     */
-    constructor(data = {}, status = StatusCodes.UNAUTHORIZED) {
+    constructor(data: ErrorProps = null, status: StatusCodes = StatusCodes.UNAUTHORIZED) {
         super()
         this.excepted(data, status)
     }

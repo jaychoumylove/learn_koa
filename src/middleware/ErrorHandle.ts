@@ -6,12 +6,6 @@ import Success from '../exception/Success';
 import config from '../Config';
 import { getClients } from '../messageQueue';
 
-/**
- * register error handle
- * @param {Context} ctx
- * @param {Promise} next
- * @returns
- */
 const errorHandle = async (ctx, next) => {
     const start = Date.now();
     try {
@@ -34,7 +28,7 @@ const errorHandle = async (ctx, next) => {
             };
             ctx.response.status = status;
             const spendTime = Math.round(Date.now() - start);
-            writeInfoLog(`${ctx.method} ${ctx.path}: OK; spend: ${spendTime}ms`);
+            writeInfoLog(`${ctx.method} ${ctx.path}: OK; spend: ${spendTime}ms. `);
             return;
         }
         const spendTime = Math.round(Date.now() - start);

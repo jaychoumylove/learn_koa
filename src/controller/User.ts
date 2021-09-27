@@ -8,10 +8,6 @@ import Page from '../validation/Page';
 import User from '../entity/User';
 import { In, getManager } from 'typeorm';
 
-/**
- * get info by id
- * @param {Context} ctx
- */
 const getInfo = async (ctx) => {
     new Id().check(ctx.params);
     const { id } = ctx.params;
@@ -19,10 +15,6 @@ const getInfo = async (ctx) => {
     throw new Success(info);
 };
 
-/**
- * get info by ids
- * @param {Context} ctx
- */
 const getList = async (ctx) => {
     new Ids().check(ctx.request.query);
     const { ids } = ctx.request.query;
@@ -117,12 +109,13 @@ const create = async (ctx) => {
     if (!lastName || !firstName) {
         throw new Parameter();
     }
+
+    const user = User.create({ firstName: firstName, lastName: lastName });
+    // or you can do it this way.
     // const user = new User();
     // user.firstName = firstName;
     // user.lastName = lastName;
-    // await user.save();
 
-    const user = User.create({ firstName: firstName, lastName: lastName });
     await user.save();
 
     throw new Success(user);

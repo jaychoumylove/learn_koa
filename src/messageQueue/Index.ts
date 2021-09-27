@@ -7,7 +7,7 @@ import Base from './channel/Base';
 config();
 
 interface ClientDictionary {
-    [id: string]: Base
+    [key: string]: Base
 }
 
 let clients: ClientDictionary = {};

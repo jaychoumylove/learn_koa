@@ -1,55 +1,44 @@
+import { Channel, Connection, Options } from "amqplib";
+import { ConsumeMessage } from "amqplib/properties";
+
+type exchangeType = 'direct' | 'topic' | 'headers' | 'fanout' | 'match' | string;
+
+interface IExchangeRouterItem {
+    name: string,
+    type: exchangeType,
+    option: Options.AssertExchange
+}
+
+interface IExchangeRouterObj {
+    [key: string]: IExchangeRouterItem
+}
+
+interface IChannelQueueItem {
+    name?: string,
+    createOption: Options.AssertQueue,
+    bindExchange: string,
+    bindKey: string[],
+    consume: (msg: ConsumeMessage | null) => void,
+    consumeOption: Options.Consume
+}
+
+interface IChannelQueueObj {
+    [key: string]: IChannelQueueItem
+}
+
 export default class Base {
-    /**
-     * @type {ChannelModel|null}
-     */
-    connection = null
+    connection: Connection = null
 
-    /**
-     * @type {Channel|null}
-     */
-    channelInstance = null
+    channelInstance: Channel = null
 
-    /**
-     * @type {Object|Array}
-     */
-    routes = {}
+    routes: IExchangeRouterItem[] | IExchangeRouterObj = {}
 
-    // exampleRoutes = {
-    //     'topic_logs': {
-    //         name: 'topic_logs',
-    //         type: 'topic',
-    //         option: {
-    //             durable: false
-    //         }
-    //     }
-    // }
-
-    /**
-     * @type {Object|Array}
-     */
-    queues = {}
-
-    // exampleQueues = {
-    //     'report': {
-    //         name: undefined,
-    //         createOption: {
-    //             exclusive: true
-    //         },
-    //         bindExchange: 'topic_logs',
-    //         bindKey: [
-    //             '#'
-    //         ],
-    //         consume: console.log,
-    //         consumeOption: {
-    //             noAck: true
-    //         }
-    //     }
-    // }
+    queues: IChannelQueueItem[] | IChannelQueueObj = {}
 
     async init(connection) {
         this.connection = connection
         await this.initChannel()
-        this.initRouter()
+        await this.initRouter()
         await this.initQueue()
     }
 
@@ -57,7 +46,7 @@ export default class Base {
         this.channelInstance = await this.connection.createChannel()
     }
 
-    initRouter() {
+    async initRouter() {
         if (this.routes instanceof Array) {
             this.routes.map(({ name, type, option }) => {
                 this.channelInstance.assertExchange(name, type, option)
@@ -93,12 +82,12 @@ export default class Base {
                 this.channelInstance.bindQueue(queue.queue, bindExchange, key)
             })
         } else if (typeof bindKey === 'string') {
-            this.channelInstance.bindQueue(queue.queue, bindExchange, bindKey)
+            await this.channelInstance.bindQueue(queue.queue, bindExchange, bindKey)
         } else {
-            this.channelInstance.bindQueue(queue.queue, bindExchange, '')
+            await this.channelInstance.bindQueue(queue.queue, bindExchange, '')
         }
 
-        this.channelInstance.consume(queue.queue, consume, consumeOption)
+        await this.channelInstance.consume(queue.queue, consume, consumeOption)
 
         return queue
     }

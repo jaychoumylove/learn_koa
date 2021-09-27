@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes'
-import Base from './Base'
+import Base, { ErrorProps } from './Base'
 
 export default class Token extends Base {
     message = 'Invalid token!'
@@ -8,12 +8,8 @@ export default class Token extends Base {
 
     data = null
 
-    /**
-     * Generate Token Error
-     * @param {?{message?: String, errorCode?: Number, data?: Object}} data
-     * @param {?Number} status
-     */
-    constructor(data = {}, status = StatusCodes.UNAUTHORIZED) {
+
+    constructor(data: ErrorProps = null, status: StatusCodes = StatusCodes.UNAUTHORIZED) {
         super()
         this.excepted(data, status)
     }

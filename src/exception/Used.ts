@@ -1,4 +1,5 @@
-import Base from './Base'
+import Base, { ErrorProps } from './Base'
+import { StatusCodes } from "http-status-codes";
 
 export default class Used extends Base {
     message = 'Occupied!'
@@ -7,12 +8,7 @@ export default class Used extends Base {
 
     data = null
 
-    /**
-     * Generate Used Error
-     * @param {?{message?: String, errorCode?: Number, data?: Object}} data
-     * @param {?Number} status
-     */
-    constructor(data = {}, status = 226) {
+    constructor(data: ErrorProps = null, status: StatusCodes = 226) {
         super()
         this.excepted(data, status)
     }

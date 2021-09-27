@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes'
-import Base from './Base'
+import Base, { ErrorProps } from './Base'
 
 export default class Gone extends Base {
     data = null
@@ -8,12 +8,7 @@ export default class Gone extends Base {
 
     errorCode = 10005
 
-    /**
-     * Generate Gone Error
-     * @param {?{message?: String, errorCode?: Number, data?: Object}} data
-     * @param {?Number} status
-     */
-    constructor(data = {}, status = StatusCodes.GONE) {
+    constructor(data: ErrorProps = null, status: StatusCodes = StatusCodes.GONE) {
         super()
         this.excepted(data, status)
     }

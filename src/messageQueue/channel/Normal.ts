@@ -1,4 +1,5 @@
 import Base from './Base'
+import { ConsumeMessage } from "amqplib/properties";
 
 export default class Normal extends Base {
     routes = {
@@ -28,7 +29,7 @@ export default class Normal extends Base {
         },
     }
 
-    consumeReport(msg) {
+    consumeReport(msg: ConsumeMessage | null) {
         console.log(" [x] %s:'%s'", msg.fields.routingKey, msg.content.toString());
     }
 }

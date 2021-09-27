@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes'
-import Base from './Base'
+import Base, { ErrorProps } from './Base'
 
 export default class Forbidden extends Base {
     message = 'Permission denied!'
@@ -8,12 +8,7 @@ export default class Forbidden extends Base {
 
     data = null
 
-    /**
-     * Generate Forbidden Error
-     * @param {?{message?: String, errorCode?: Number, data?: Object}} data
-     * @param {?Number} status
-     */
-    constructor(data = {}, status = StatusCodes.FORBIDDEN) {
+    constructor(data: ErrorProps = null, status: StatusCodes = StatusCodes.FORBIDDEN) {
         super()
         this.excepted(data, status)
     }

@@ -2,6 +2,12 @@ import { StatusCodes } from 'http-status-codes'
 
 const allowProps = ['data', 'errorCode', 'message']
 
+export interface ErrorProps {
+    message?: string,
+    errorCode?: number,
+    data?: {}
+}
+
 export default class Base extends Error {
     status = StatusCodes.OK
 
@@ -11,14 +17,10 @@ export default class Base extends Error {
 
     errorCode = 0
 
-    /**
-     * Generate Base Error
-     * @param {?{message?: String, errorCode?: Number, data?: Object}} data
-     * @param {?Number} status
-     */
-    constructor(data = null, status = 0) {
+    constructor(data: ErrorProps = null, status: StatusCodes = 0) {
         super()
-        // Fixed compile to es5 extends Class bug. see https://github.com/microsoft/TypeScript/wiki/FAQ#why-doesnt-extending-built-ins-like-error-array-and-map-work
+        // Fixed compile to es5 extends Class bug.
+        // see https://github.com/microsoft/TypeScript/wiki/FAQ#why-doesnt-extending-built-ins-like-error-array-and-map-work
         Object.setPrototypeOf(this, new.target.prototype);
         if (data || status) {
             const tempData = (!data || JSON.stringify(data) === '{}') ? {} : data;
@@ -27,7 +29,7 @@ export default class Base extends Error {
         }
     }
 
-    public excepted = (data = {}, status = StatusCodes.OK) => {
+    public excepted = (data: ErrorProps = null, status: StatusCodes = 0) => {
         if (data instanceof Object && data) {
             for (const allowProp of allowProps) {
                 if (data.hasOwnProperty(allowProp)) {
