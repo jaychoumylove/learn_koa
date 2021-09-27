@@ -1,10 +1,10 @@
-import Base from './base'
+import Base from './Base'
 import Joi from 'joi'
-import mobileRule from '../rule/mobile'
+import mobileRule from '../rule/Mobile'
 import IdsRule from '../rule/Ids'
 import Regexp from '../rule/Regexp'
-import DateRule from '../rule/date'
-import UrlRule from '../rule/url'
+import DateRule from '../rule/Date'
+import UrlRule from '../rule/Url'
 
 export default class Test extends Base {
     defaultSchema = Joi.object({

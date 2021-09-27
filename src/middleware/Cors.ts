@@ -1,5 +1,5 @@
 import * as cors from '@koa/cors'
-import config from '../config'
+import config from '../Config'
 
 const allowOrigin = 'http://localhost:3000'
 const corsHandle = cors({

@@ -1,6 +1,6 @@
-import Base from './base';
+import Base from './Base';
 import nodemailer from 'nodemailer';
-import { writeInfoLog, writeErrorLog } from '../../logger';
+import { writeInfoLog, writeErrorLog } from '../../Logger';
 
 export default class Normal extends Base {
     routes = {

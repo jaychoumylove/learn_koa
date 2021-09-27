@@ -1,4 +1,4 @@
-import RegexpRule from './regexp'
+import RegexpRule from './Regexp'
 
 const IdsRegexp = /^([0-9],?)+$/
 

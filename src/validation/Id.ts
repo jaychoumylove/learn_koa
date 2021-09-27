@@ -1,4 +1,4 @@
-import Base from './base'
+import Base from './Base'
 import * as Joi from 'joi'
 
 export default class Id extends Base {

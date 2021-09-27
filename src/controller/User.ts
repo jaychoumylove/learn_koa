@@ -1,11 +1,11 @@
-import Success from '../exception/success';
+import Success from '../exception/Success';
 import faker from 'Faker';
 import { Context } from 'koa';
-import Parameter from '../exception/parameter';
-import Miss from '../exception/miss';
-import Id from '../validation/id';
+import Parameter from '../exception/Parameter';
+import Miss from '../exception/Miss';
+import Id from '../validation/Id';
 import Ids from '../validation/ids';
-import Page from '../validation/page';
+import Page from '../validation/Page';
 import User from '../entity/User';
 import { In, getManager } from 'typeorm';
 

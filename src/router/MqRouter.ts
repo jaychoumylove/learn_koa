@@ -1,4 +1,4 @@
-import mq from '../controller/mq';
+import mq from '../controller/Mq';
 import Router from '@koa/router';
 
 const mqRouter = (router: Router) => {

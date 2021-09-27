@@ -177,7 +177,7 @@ export default userRouter;
 
 示例如下：
 ```js
-import Success from "../../exception/success";
+import Success from "../../exception/Success";
 import Id from "../../validation/id";
 import User from "../../model/user";
 
@@ -404,7 +404,7 @@ new Id().check({ id: 's' });
 
 在`src/validation` 下书写验证器，比如我们写一个校验`id`的验证器：
 ```js
-import Base from './base'
+import Base from './Base'
 import Joi from 'joi';
 
 export default class Id extends Base {
@@ -421,7 +421,7 @@ export default class Id extends Base {
 #### rule
 在`src/rule` 下书写自己的验证规则，比如我们写一个校验`ids`的规则：
 ```js
-import RegexpRule from './regexp'
+import RegexpRule from './Regexp'
 
 function fn (value, helpers) {
   const regex = new RegExp(/^([0-9],?)+$/)
@@ -440,7 +440,7 @@ new Ids().check({ id: '1,2,4,s' });
 ```
 - 在验证器里面使用自定义规则
 ```js
-import Base from './base'
+import Base from './Base'
 import Joi from 'joi';
 import IdsRule from '../rule/Ids'
 
@@ -469,7 +469,7 @@ const throwIt = async (ctx) => {
 与此同时，自定义的每一个异常都代表一个`Response`，以`src/exception/parameter.js`内容示例:
 ```js
 import { StatusCodes } from 'http-status-codes'
-import Base from './base'
+import Base from './Base'
 
 export default class Parameter extends Base {
     message = 'Invalid parameters!'
@@ -495,7 +495,7 @@ export default class Parameter extends Base {
 ```js
 // src/exception/custom.js
 import { StatusCodes } from 'http-status-codes'
-import Base from './base'
+import Base from './Base'
 
 export default class Custom extends Base {
     message = 'Custom Exception!'
@@ -617,7 +617,7 @@ RABBIT_MQ_PASS=guest
 
 在`src/messageQueue/channel`下面创建文件，示例：
 ```js
-import Base from './base'
+import Base from './Base'
 
 export default class Normal extends Base {
     // 定义你的路由
@@ -662,7 +662,7 @@ export default class Normal extends Base {
 消费的使用比较简单，提取对应的客户端执行消费即可，示例：
 ```js
 // src/api/controller/mq.js
-import Success from "../../exception/success";
+import Success from "../../exception/Success";
 import { getClients } from "../../messageQueue/index";
 
 const publish = async (ctx) => {
@@ -690,7 +690,7 @@ REDIS_DB=1
 使用示例：
 ```js
 // src/api/controller/redis.js
-import Success from '../../exception/success'
+import Success from '../../exception/Success'
 import RedisClient from '../../redis'
 
 const get = async (ctx) => {

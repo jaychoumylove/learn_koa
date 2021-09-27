@@ -1,4 +1,4 @@
-import Success from '../exception/success';
+import Success from '../exception/Success';
 import { getClients } from '../messageQueue';
 
 const publish = async (ctx) => {

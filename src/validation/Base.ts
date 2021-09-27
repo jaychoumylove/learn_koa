@@ -1,5 +1,5 @@
 import { ObjectSchema } from 'joi'
-import Parameter from '../exception/parameter'
+import Parameter from '../exception/Parameter'
 
 export default class Base {
     defaultSchema: ObjectSchema;

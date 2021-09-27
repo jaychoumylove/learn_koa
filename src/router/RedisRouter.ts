@@ -1,4 +1,4 @@
-import redis from '../controller/redis'
+import redis from '../controller/Redis'
 import Router from '@koa/router';
 
 const redisRouter = (router: Router) => {

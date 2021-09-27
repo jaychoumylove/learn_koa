@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes'
-import Base from './base'
+import Base from './Base'
 
 export default class MethodNotAllowed extends Base {
     message = 'Method not allowed!'

@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes'
-import Base from './base'
+import Base from './Base'
 
 export default class Parameter extends Base {
     message = 'Invalid parameters!'

@@ -2,7 +2,7 @@ import { createClient } from 'redis';
 import { config } from 'dotenv'
 import {
     writeErrorLog,
-} from './logger'
+} from './Logger'
 
 config()
 

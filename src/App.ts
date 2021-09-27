@@ -1,16 +1,16 @@
 import * as Koa from 'koa'
-import middleware from './middleware/compose'
+import middleware from './middleware/Compose'
 import { config } from 'dotenv'
 
 config()
 import {
     initLogger, writeErrorLog,
     writeInfoLog,
-} from './logger'
+} from './Logger'
 
 initLogger()
 
-import './messageQueue/index'
+import './messageQueue/Index'
 import { createConnection } from 'typeorm';
 
 const app = new Koa()

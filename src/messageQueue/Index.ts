@@ -1,8 +1,8 @@
 import { config } from 'dotenv';
-import Normal from './channel/normal';
-import Email from './channel/email';
-import getConnection from './connection';
-import Base from './channel/base';
+import Normal from './channel/Normal';
+import Email from './channel/Email';
+import getConnection from './Connection';
+import Base from './channel/Base';
 
 config();
 

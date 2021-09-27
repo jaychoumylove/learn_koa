@@ -1,4 +1,4 @@
-import Base from './base'
+import Base from './Base'
 import { StatusCodes } from 'http-status-codes'
 // import { writeInfoLog } from '../logger';
 

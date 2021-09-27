@@ -1,6 +1,6 @@
-import Base from './base'
+import Base from './Base'
 import * as Joi from 'joi'
-import SortByRule from '../rule/sortBy'
+import SortByRule from '../rule/SortBy'
 
 export default class Page extends Base {
     defaultSchema = Joi.object({

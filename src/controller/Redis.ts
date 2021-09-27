@@ -1,5 +1,5 @@
-import Success from '../exception/success'
-import RedisClient from '../redis'
+import Success from '../exception/Success'
+import RedisClient from '../Redis'
 
 const get = async (ctx) => {
     const { key } = ctx.request.query

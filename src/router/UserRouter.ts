@@ -1,4 +1,4 @@
-import user from '../controller/user'
+import user from '../controller/User'
 import Router from '@koa/router';
 
 const userRouter = (router: Router) => {
