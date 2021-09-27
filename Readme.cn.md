@@ -720,7 +720,7 @@ export default {
 
 ## Contributing
 
-> before push your request, you should run `yarn lint` or `yarn lintWithFix` to make sure you code pass linter. 
+> Before push your request, you should run `yarn lint` or `yarn lintWithFix` to make sure you code pass linter. 
 
 ## License
 
