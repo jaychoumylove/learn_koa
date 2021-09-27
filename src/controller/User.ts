@@ -1,6 +1,5 @@
 import Success from '../exception/Success';
 import faker from 'Faker';
-import { Context } from 'koa';
 import Parameter from '../exception/Parameter';
 import Miss from '../exception/Miss';
 import Id from '../validation/Id';
@@ -101,7 +100,7 @@ const del = async (ctx) => {
     try {
         await getManager().transaction(async () => {
             // soft delete
-            await User.softRemove(info,{ });
+            await User.softRemove(info, { });
 
             // delete anyway
             // await User.delete({ id });
