@@ -52,7 +52,6 @@ const getListWithPage = async (ctx) => {
     if (!size) {
         size = 15;
     }
-    // @ts-ignore
     const info = await User.find({
         order: {
             id: 'DESC',
@@ -80,6 +79,10 @@ const update = async (ctx) => {
 const patch = async (ctx) => {
     new Id().check(ctx.params);
     const { id } = ctx.params;
+    let info = await User.findOne(id);
+    if (!info) {
+        throw new Miss({ message: "Can't find user!" });
+    }
     const { firstName } = ctx.request.body;
     await User.update({ id }, {
         firstName: firstName,
@@ -90,9 +93,18 @@ const patch = async (ctx) => {
 const del = async (ctx) => {
     new Id().check(ctx.params);
     const { id } = ctx.params;
+    let info = await User.findOne(id);
+    if (!info) {
+        throw new Miss({ message: "Can't find user!" });
+    }
+
     try {
         await getManager().transaction(async () => {
-            await User.delete({ id });
+            // soft delete
+            await User.softRemove(info,{ });
+
+            // delete anyway
+            // await User.delete({ id });
         });
     } catch (e) {
         throw e;
@@ -110,8 +122,10 @@ const create = async (ctx) => {
     // user.firstName = firstName;
     // user.lastName = lastName;
     // await user.save();
+
     const user = User.create({ firstName: firstName, lastName: lastName });
     await user.save();
+
     throw new Success(user);
 };
 
