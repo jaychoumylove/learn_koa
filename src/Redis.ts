@@ -15,8 +15,8 @@ if (Boolean(process.env.REDIS_STATUS)) {
         port: process.env.REDIS_PORT,
     });
     RedisClient.on('error', err => {
-        writeErrorLog('[REDIS]')
-        writeErrorLog(err)
+        console.error('[REDIS]')
+        console.error(err)
     })
 }
 

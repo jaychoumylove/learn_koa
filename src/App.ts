@@ -3,12 +3,9 @@ import middleware from './middleware/Compose'
 import { config } from 'dotenv'
 
 config()
-import {
-    initLogger, writeErrorLog,
-    writeInfoLog,
-} from './Logger'
+import { initWithConsole } from './Logger'
 
-initLogger()
+initWithConsole()
 
 import './messageQueue/Index'
 import './Redis'
@@ -20,12 +17,12 @@ app.use(middleware)
 const port = process.env.PORT || 3000;
 
 createConnection().then(r => {
-    writeInfoLog('Connection is ready!')
-    writeInfoLog(r)
+    console.log('Connection is ready!')
+    console.log(r)
 }).catch(e => {
-    writeErrorLog(e)
+    console.error(e)
 })
 
 app.listen(port, async () => {
-    writeInfoLog('server is running at http://localhost:' + port)
+    console.log('server is running at http://localhost:' + port)
 })

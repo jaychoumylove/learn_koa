@@ -66,42 +66,60 @@ const initLogger = () => {
     configure(logConfig)
 }
 
-const getLoggerInterface = (type = 'default') => {
-    const typeDict = Object.keys(logConfig.categories);
-    if (typeDict.indexOf(type) < 0) {
-        type = 'default'
+const initWithConsole = () => {
+    configure(logConfig);
+    function proxy(context, method, message) {
+        return function() {
+            method.apply(context, [message].concat(Array.prototype.slice.apply(arguments)))
+        }
     }
-    return getLogger(type)
+
+    // cover Console
+    console.log = proxy(this, writeInfoLog, 'Info: ')
+    console.info = proxy(this, writeInfoLog, 'Info: ')
+    console.warn = proxy(this, writeWarnLog, 'Warn: ')
+    console.error = proxy(this, writeErrorLog, 'Error: ')
 }
 
-const writeLog = (log, type = 'info') => {
+const getLoggerInterface = (_type = 'default') => {
+    const typeDict = Object.keys(logConfig.categories);
+    if (typeDict.indexOf(_type) < 0) {
+        _type = 'default'
+    }
+    return getLogger(_type)
+}
+
+const writeLog = (_type, ...log) => {
+    if (!_type) _type = 'info'
+    // console.log(arguments)
     const typeDict = ['error', 'debug', 'warn']
-    if (typeDict.indexOf(type) > -1) {
+    if (typeDict.indexOf(_type) > -1) {
         // log with specific types
-        getLoggerInterface(type)[type](log)
+        getLoggerInterface(_type)[_type](...log)
     }
     // log all of types with 'application'
-    getLoggerInterface('application')[type](log)
+    getLoggerInterface('application')[_type](...log)
     // output to console
-    getLoggerInterface()[type](log)
+    getLoggerInterface()[_type](...log)
 }
 
-const writeErrorLog = (log) => {
-    writeLog(log, 'error')
+const writeErrorLog = (...args) => {
+    writeLog('error', ...args)
 }
-const writeDebugLog = (log) => {
-    writeLog(log, 'debug')
+const writeDebugLog = (...args) => {
+    writeLog('debug', ...args)
 }
-const writeInfoLog = (log) => {
-    writeLog(log, 'info')
+const writeInfoLog = (...args) => {
+    writeLog('info', ...args)
 }
-const writeWarnLog = (log) => {
-    writeLog(log, 'warn')
+const writeWarnLog = (...args) => {
+    writeLog('warn', ...args)
 }
 
 export {
     getLoggerInterface,
     initLogger,
+    initWithConsole,
     writeWarnLog,
     writeErrorLog,
     writeInfoLog,

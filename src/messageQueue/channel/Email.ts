@@ -1,6 +1,5 @@
 import Base from './Base';
 import nodemailer from 'nodemailer';
-import { writeInfoLog, writeErrorLog } from '../../Logger';
 import { ConsumeMessage } from "amqplib/properties";
 
 export default class Normal extends Base {
@@ -51,11 +50,11 @@ export default class Normal extends Base {
                 // html: "<b>Hello world?</b>", // html body
             });
 
-            writeInfoLog('[Mailer]');
-            writeInfoLog(info);
+            console.log('[Mailer]');
+            console.log(info);
         } catch (e) {
-            writeErrorLog('[Mailer]');
-            writeErrorLog(e);
+            console.error('[Mailer]');
+            console.error(e);
             throw e;
         }
     }
