@@ -131,3 +131,7 @@ knexfile.js
 build/
 tmp/
 temp/
+
+ormconfig.ts
+ormconfig.js
+ormconfig.json

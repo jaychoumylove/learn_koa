@@ -36,16 +36,22 @@ const getList = async (ctx) => {
 
 const getListWithPage = async (ctx) => {
     new Page().check(ctx.request.query);
-    let { page, size } = ctx.request.query;
+    let { page, size, sortBy, sortField } = ctx.request.query;
     if (!page) {
         page = faker.random.number(10);
     }
     if (!size) {
         size = 15;
     }
+    if (!sortBy) {
+        sortBy = 'DESC'
+    }
+    if (!sortField) {
+        sortField = 'id'
+    }
     const info = await User.find({
         order: {
-            id: 'DESC',
+            [sortField]: sortBy.toUpperCase(),
         },
         skip: (page - 1) * size,
         take: size,

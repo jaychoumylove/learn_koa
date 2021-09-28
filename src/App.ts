@@ -18,7 +18,6 @@ const port = process.env.PORT || 3000;
 
 createConnection().then(r => {
     console.log('Connection is ready!')
-    console.log(r)
 }).catch(e => {
     console.error(e)
 })
