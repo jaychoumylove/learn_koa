@@ -555,6 +555,8 @@ const throwCustom = async (ctx) => {
 
 主要逻辑在`src/logger.js` 下，暴露多个`api`:`writeInfoLog`,`writeErrorLog`,`writeDebugLog`,`writeLog`等，你可以根据场景写入日志。
 
+> 注意：本框架重写了 `Console.info`,`Console.error`,`Console.warn`,`Console.log`，你只需要使用这几个日志方法即可记录日志。
+
 > 测试环境以及开发环境下默认开启数据库debug模式
 
 如下是一个`PUT /user/6`的请求日志：
