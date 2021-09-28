@@ -1,5 +1,4 @@
 import Base from "../exception/base";
-import { writeErrorLog, writeInfoLog } from "../logger";
 import { Context } from "koa";
 import { StatusCodes } from "http-status-codes";
 import Miss from "../exception/miss";
@@ -16,7 +15,7 @@ import { getClients } from "../messageQueue/index";
 const errorHandle = async (ctx, next) => {
   const start = Date.now();
   try {
-    writeInfoLog(`${ctx.method} ${ctx.path}: Start.`);
+    console.log(`${ctx.method} ${ctx.path}: Start.`);
     await next();
     if (404 === ctx.response.status) {
       throw new Miss({ message: "Router not found!" });
@@ -35,12 +34,12 @@ const errorHandle = async (ctx, next) => {
       };
       ctx.response.status = status;
       const spendTime = Math.round(Date.now() - start);
-      writeInfoLog(`${ctx.method} ${ctx.path}: OK; spend: ${spendTime}ms`);
+      console.log(`${ctx.method} ${ctx.path}: OK; spend: ${spendTime}ms`);
       return;
     }
     const spendTime = Math.round(Date.now() - start);
-    writeErrorLog(`${ctx.method} ${ctx.path}:spend: ${spendTime}ms. `);
-    writeErrorLog(error);
+    console.error(`${ctx.method} ${ctx.path}:spend: ${spendTime}ms. `);
+    console.error(error);
 
     if (config.devVar.indexOf(process.env.APP_ENV) > -1) {
       throw error;

@@ -4,11 +4,11 @@ import dotEnv from 'dotenv'
 
 dotEnv.config()
 import {
-    initLogger,
+    initWithConsole,
     writeInfoLog
 } from './logger'
 
-initLogger()
+initWithConsole()
 
 import './messageQueue/index'
 
@@ -18,5 +18,5 @@ app.use(middleware)
 const port = process.env.PORT || 3000;
 
 app.listen(port, async () => {
-    writeInfoLog('server is running at http://localhost:' + port)
+    console.log('server is running at http://localhost:' + port)
 })

@@ -3,11 +3,6 @@ import bookshelf from 'bookshelf'
 import paranoia from 'bookshelf-paranoia'
 import connection from '../../knexfile'
 import dotEnv from 'dotenv'
-import {
-    writeDebugLog,
-    writeErrorLog,
-    writeWarnLog
-} from '../logger'
 
 dotEnv.config()
 
@@ -37,20 +32,20 @@ switch (process.env.APP_ENV) {
 const logConfig = {
     log: {
         warn (message) {
-            writeWarnLog('[DATABASE] ' + message)
+            console.warn('[DATABASE] ' + message)
         },
         error (message) {
-            writeErrorLog('[DATABASE] ' + message)
+            console.error('[DATABASE] ' + message)
         },
         deprecate (message) {
-            writeErrorLog('[DATABASE] ' + message)
+            console.error('[DATABASE] ' + message)
         },
         debug (message) {
             if (typeof message === 'string') {
-                writeDebugLog('[DATABASE] ' + message)
+                console.debug('[DATABASE] ' + message)
             } else {
-                writeDebugLog('[DATABASE]')
-                writeDebugLog(message)
+                console.debug('[DATABASE]')
+                console.debug(message)
             }
         },
     }
