@@ -11,6 +11,7 @@ exports.up = function (knex) {
     table.increments("id").primary();
     table.string("first_name", 255).notNullable();
     table.string("last_name", 255).notNullable();
+    table.timestamp('deleted_at');
     table.timestamps();
   });
 };
