@@ -46,7 +46,7 @@
   },
   "scripts": {
     "start": "nodemon --exec ts-node -- src/App.ts",
-    "tsnode": "ts-node src/app.ts",
+    "tsnode": "ts-node src/App.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --ext .ts",
     "lintWithFix": "eslint . --ext .ts --fix"
