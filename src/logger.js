@@ -58,17 +58,17 @@ const initLogger = () => {
 
 const initWithConsole = () => {
     configure(logConfig);
-    function proxy(context, method, message) {
+    function proxy(context, method) {
         return function() {
-            method.apply(context, [message].concat(Array.prototype.slice.apply(arguments)))
+            method.apply(context, Array.from(arguments))
         }
     }
 
     // cover Console
-    console.log = proxy(this, writeInfoLog, 'Info: ')
-    console.info = proxy(this, writeInfoLog, 'Info: ')
-    console.warn = proxy(this, writeWarnLog, 'Warn: ')
-    console.error = proxy(this, writeErrorLog, 'Error: ')
+    console.log = proxy(this, writeInfoLog)
+    console.info = proxy(this, writeInfoLog)
+    console.warn = proxy(this, writeWarnLog)
+    console.error = proxy(this, writeErrorLog)
 }
 
 const getLoggerInterface = (_type = 'default') => {
@@ -106,7 +106,7 @@ const writeWarnLog = (...args) => {
     writeLog('warn', ...args)
 }
 
-module.exports = {
+export {
     getLoggerInterface,
     initLogger,
     initWithConsole,
