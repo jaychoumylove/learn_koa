@@ -16,7 +16,7 @@ export = {
     ],
     cli: {
         migrationsDir: 'src/entity',
-        entitiesDir: 'src/migration',
+        entitiesDir: 'src/migrations',
         subscribersDir: 'src/subscriber',
     },
     synchronize: true,
