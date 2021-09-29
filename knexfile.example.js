@@ -3,6 +3,7 @@
 module.exports = {
   development: {
     client: "postgresql",
+    // connection: <driver>://<user>:<secret>@<host>:<port>/<database>,
     connection: {
       host: "localhost",
       port: 5432,
