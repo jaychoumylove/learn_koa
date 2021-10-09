@@ -6,7 +6,6 @@ docker-compose*
 .dockerignore
 .git
 .gitignore
-.env
 */bin
 */obj
 README.md
@@ -19,3 +18,4 @@ feature.md
 Readme.cn.md
 .env.example
 ormconfig.example.*
+docker/

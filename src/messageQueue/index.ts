@@ -35,9 +35,12 @@ const initMq = async () => {
     };
 };
 
-if (Boolean(process.env.RABBIT_MQ_STATUS)) {
+if (parseInt(process.env.RABBIT_MQ_STATUS)) {
     initMq().then((res) => {
+        console.log('RABBIT connection is ready!')
         setClients(res);
+    }).catch(e => {
+        console.log('RABBIT connection failed!')
     });
 }
 

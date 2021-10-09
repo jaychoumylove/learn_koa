@@ -3,13 +3,13 @@ import RedisClient from '../Redis'
 
 const get = async (ctx) => {
     const { key } = ctx.request.query
-    const val = await RedisClient.get(key)
+    const val = await RedisClient?.get(key)
     throw new Success(val)
 }
 
 const save = async (ctx) => {
     const { key, value } = ctx.request.body
-    await RedisClient.set(key, value)
+    await RedisClient?.set(key, value)
     throw new Success()
 }
 
