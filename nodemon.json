@@ -4,7 +4,8 @@
     ".git",
     "node_modules/**/node_modules",
     "logs/*",
-    "config/*"
+    "config/*",
+    "public/*"
   ],
   "verbose": true,
   "execMap": {

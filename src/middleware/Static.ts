@@ -1,4 +1,4 @@
-import send from 'koa-send'
+import * as send from 'koa-send'
 import { join } from 'path'
 
 const staticPath = join(__dirname, '../../')

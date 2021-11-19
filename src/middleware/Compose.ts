@@ -5,15 +5,17 @@ import corsHandle from './Cors'
 import * as responseTime from 'koa-response-time'
 import NotImplemented from '../exception/NotImplemented'
 import MethodNotAllowed from '../exception/MethodNotAllowed'
-import * as bodyParser from 'koa-bodyparser'
+import * as koaBody from 'koa-body'
 import staticHandle from './Static'
 
 const all = [
     responseTime({ hrtime: true }),
+    corsHandle,
     staticHandle,
     errorHandle,
-    corsHandle,
-    bodyParser(),
+    koaBody({
+        multipart: true,
+    }),
     router.routes(),
     router.allowedMethods({
         throw: true,

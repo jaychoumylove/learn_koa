@@ -10,11 +10,13 @@ const errorHandle = async (ctx, next) => {
     try {
         console.log(`${ctx.method} ${ctx.path}: Start.`);
         await next();
-        if (404 === ctx.response.status) {
-            throw new Miss({ message: 'Router not found!' });
-        }
-        if ('OPTIONS' === ctx.method) {
-            throw new Success();
+        if (!ctx.response.body) {
+            if (404 === ctx.response.status) {
+                throw new Miss({ message: 'Router not found!' });
+            }
+            if ('OPTIONS' === ctx.method) {
+                throw new Success();
+            }
         }
     } catch (error) {
         if (error instanceof Base) {

@@ -32,7 +32,7 @@
 
 ## Intro
 
-`learn_koa`是一个简单高效，基于`koa`，轻量级的`node.js`框架，主要特性：
+`learn_koa`是一个简单高效，基于`koa`，轻量级的`node.ts`框架，主要特性：
 - 支持ES6语法
 - 强大的错误处理
 - ORM支持
@@ -57,78 +57,78 @@
     |   |-- warn - 警告日志
     |       |-- 2021-07-29.log
     |-- src
-        |-- app.js - 入口文件
-        |-- config.js - 配置文件
-        |-- nodeMailer.js - mail客户端
-        |-- redis.js - redis客户端
-        |-- util.js - 辅助工具
-        |-- logger.js - 日志类
+        |-- app.ts - 入口文件
+        |-- config.ts - 配置文件
+        |-- nodeMailer.ts - mail客户端
+        |-- redis.ts - redis客户端
+        |-- util.ts - 辅助工具
+        |-- logger.ts - 日志类
         |-- api - api核心业务
         |   |-- controller - 控制层
-        |       |-- mq.js
-        |       |-- redis.js
-        |       |-- user.js
+        |       |-- mq.ts
+        |       |-- redis.ts
+        |       |-- user.ts
         |-- database - 数据库
-        |   |-- knex.js - knex客户端
+        |   |-- knex.ts - knex客户端
         |   |-- migrations - 数据库迁移
-        |   |   |-- 20210531024816_create_table_person.js
+        |   |   |-- 20210531024816_create_table_person.ts
         |   |-- seeds - 数据库填充
-        |       |-- add_users.js
+        |       |-- add_users.ts
         |-- exception - 异常
-        |   |-- base.js
-        |   |-- done.js
-        |   |-- forbidden.js
-        |   |-- gone.js
-        |   |-- locked.js
-        |   |-- methodNotAllowed.js
-        |   |-- miss.js
-        |   |-- notImplemented.js
-        |   |-- parameter.js
-        |   |-- signature.js
-        |   |-- success.js
-        |   |-- token.js
-        |   |-- used.js
+        |   |-- base.ts
+        |   |-- done.ts
+        |   |-- forbidden.ts
+        |   |-- gone.ts
+        |   |-- locked.ts
+        |   |-- methodNotAllowed.ts
+        |   |-- miss.ts
+        |   |-- notImplemented.ts
+        |   |-- parameter.ts
+        |   |-- signature.ts
+        |   |-- success.ts
+        |   |-- token.ts
+        |   |-- used.ts
         |-- messageQueue - 消息队列
-        |   |-- connection.js - 服务链接
-        |   |-- index.js - 服务入口
+        |   |-- connection.ts - 服务链接
+        |   |-- index.ts - 服务入口
         |   |-- channel - 服务channel
-        |       |-- base.js
-        |       |-- email.js
-        |       |-- normal.js
+        |       |-- base.ts
+        |       |-- email.ts
+        |       |-- normal.ts
         |-- middleware - 中间件
-        |   |-- compose.js - 中间件打包
-        |   |-- cors.js
-        |   |-- errorHandle.js
-        |   |-- router.js
+        |   |-- compose.ts - 中间件打包
+        |   |-- cors.ts
+        |   |-- errorHandle.ts
+        |   |-- router.ts
         |-- model - 模型层
-        |   |-- user.js
+        |   |-- user.ts
         |-- router - 路由层
-        |   |-- mqRouter.js
-        |   |-- redisRouter.js
-        |   |-- userRouter.js
+        |   |-- mqRouter.ts
+        |   |-- redisRouter.ts
+        |   |-- userRouter.ts
         |-- rule - 验证规则
-        |   |-- Ids.js
-        |   |-- date.js
-        |   |-- example.js
-        |   |-- mobile.js
-        |   |-- regexp.js
-        |   |-- sortBy.js
-        |   |-- url.js
+        |   |-- Ids.ts
+        |   |-- date.ts
+        |   |-- example.ts
+        |   |-- mobile.ts
+        |   |-- regexp.ts
+        |   |-- sortBy.ts
+        |   |-- url.ts
         |-- validation - 验证器
-            |-- base.js
-            |-- id.js
-            |-- ids.js
-            |-- page.js
-            |-- test.js
+            |-- base.ts
+            |-- id.ts
+            |-- ids.ts
+            |-- page.ts
+            |-- test.ts
     |-- .babelrc - babel配置
     |-- .env - 环境变量配置
     |-- .gitignore
     |-- Readme.cn.md
     |-- Readme.md
     |-- feature.md
-    |-- knexfile.example.js
-    |-- knexfile.js - knexfile配置
-    |-- package.json
+    |-- knexfile.example.ts
+    |-- knexfile.ts - knexfile配置
+    |-- package.tson
     |-- yarn.lock
 ```
 
@@ -142,15 +142,15 @@ git clone git@github.com:jaychoumylove/learn_koa.git
 ```bash
 cd learn_koa && yarn
 ```
-- 复制`knexfile.example.js`到`knexfile.js` 并且配置你的数据库
+- 复制`knexfile.example.ts`到`knexfile.ts` 并且配置你的数据库
 - 运行`yarn start`
 
 ### Router
 
-你需要在`src/router`下创建路由文件，且路由文件名必须要求以`Router.js`结尾，如：
+你需要在`src/router`下创建路由文件，且路由文件名必须要求以`Router.ts`结尾，如：
 
-```js
-// src/router/userRouter.js
+```ts
+// src/router/userRouter.ts
 import user from '../api/controller/user'
 
 const userRouter = (router) => {
@@ -176,7 +176,7 @@ export default userRouter;
 - 如上，如果有被捕获的异常请直接抛出，不用担心应用崩溃问题，框架底层已经处理了异常，详细可以看[中间件](#Middlerware)
 
 示例如下：
-```js
+```ts
 import Success from "../../exception/Success";
 import Id from "../../validation/id";
 import User from "../../model/user";
@@ -209,8 +209,8 @@ export { patch }
 #### model
 
 你的所有模型文件请放在`src/model`下，示例如下：
-```js
-// src/model/user.js
+```ts
+// src/model/user.ts
 import { bookshelfApp } from '../database/knex'
 
 const User = bookshelfApp.model('User', {
@@ -222,29 +222,29 @@ const User = bookshelfApp.model('User', {
 export default User
 ```
 
-`src/database/knex.js`的文件内容不建议你更改，除非你要安装`bookshelf`插件。
+`src/database/knex.ts`的文件内容不建议你更改，除非你要安装`bookshelf`插件。
 
 #### ORMCURD
 
 - `getlist`
-```js
+```ts
 const list = await User.where("id", "in", [1,3,5])
     .orderBy("id", "desc")
     .fetchAll();
 ```
 - `getlistWithPage`
-```js
+```ts
 const pageList = await new User().orderBy("id", "desc").fetchPage({
     page: 1,
     pageSize: 15,
 });
 ```
 - `getFirstRow`
-```js
+```ts
 let info = await User.where("id", 2).fetch();
 ```
 - `updateExistRow`
-```js
+```ts
 let info = await User.where("id", 2).fetch();
 info = await info.save({
     first_name: "first_name",
@@ -252,21 +252,21 @@ info = await info.save({
 });
 ```
 - `updateRowWithWhere`
-```js
+```ts
 await User.where("id", 4).save(
     { name: "salli" },
     { patch: true, require: false }
 );
 ```
 - `updateRowWithWhere`
-```js
+```ts
 const created = await new User().save({
     first_name: "first_name",
     last_name: "last_name",
 });
 ```
 - `deleteRows`
-```js
+```ts
 await User.where("id", 6).destroy({
     require: false,
 });
@@ -280,8 +280,8 @@ await User.where("id", 6).destroy({
 ```shell
 yarn global add knex # npm i knex -g
 ```
-- 启用数据迁移请在`knexfile.js`配置，示例:
-```js
+- 启用数据迁移请在`knexfile.ts`配置，示例:
+```ts
 module.exports = {
   myenv: {
     client: "comeclient",
@@ -300,7 +300,7 @@ module.exports = {
 knex migrate:make [filename]
 ```
 然后你需要在`up`和`down`里面完成迁移逻辑；示例：
-```js
+```ts
 /**
  * @Notice open up to
  */
@@ -330,8 +330,8 @@ exports.down = function (knex) {
 
 - 填充数据需要需要全局安装`knex`
 
-- 启用数据填充请在`knexfile.js`配置，示例:
-```js
+- 启用数据填充请在`knexfile.ts`配置，示例:
+```ts
 module.exports = {
   myenv: {
     client: "comeclient",
@@ -353,7 +353,7 @@ module.exports = {
 knex seed:make [filename]
 ```
 然后你需要在`up`和`down`里面完成填充逻辑；填充400条数据示例：
-```js
+```ts
 /**
  * @Notice open up to
  */
@@ -396,14 +396,14 @@ exports.seed = function (knex) {
 ### Validation
 
 框架基于 [jio](https://joi.dev/api/ "joi") 实现了高效易用的校验器，基本用法如下：
-```js
+```ts
 new Id().check({ id: 's' });
 ```
 数据验证不通过会自动抛出`Parameter`异常，成功不会有任何返回
 #### Validator
 
 在`src/validation` 下书写验证器，比如我们写一个校验`id`的验证器：
-```js
+```ts
 import Base from './Base'
 import Joi from 'joi';
 
@@ -420,7 +420,7 @@ export default class Id extends Base {
 
 #### rule
 在`src/rule` 下书写自己的验证规则，比如我们写一个校验`ids`的规则：
-```js
+```ts
 import RegexpRule from './Regexp'
 
 function fn (value, helpers) {
@@ -435,11 +435,11 @@ export default fn;
 #### validationusage
 
 - 在控制器里面使用
-```js
+```ts
 new Ids().check({ id: '1,2,4,s' });
 ```
 - 在验证器里面使用自定义规则
-```js
+```ts
 import Base from './Base'
 import Joi from 'joi';
 import IdsRule from '../rule/Ids'
@@ -461,13 +461,13 @@ export default class Ids extends Base {
 > <p style="text-align: right">By <strong>Learn koa</strong></p>
 
 框架基于`koa`实现了强大的异常处理器，以及异常机制，你可以在控制器里面自由的抛出异常.
-```js
+```ts
 const throwIt = async (ctx) => {
     throw new Error('Just throw an error')
 };
 ```
-与此同时，自定义的每一个异常都代表一个`Response`，以`src/exception/parameter.js`内容示例:
-```js
+与此同时，自定义的每一个异常都代表一个`Response`，以`src/exception/parameter.ts`内容示例:
+```ts
 import { StatusCodes } from 'http-status-codes'
 import Base from './Base'
 
@@ -492,8 +492,8 @@ export default class Parameter extends Base {
 #### CustomException
 
 如上所说，自定义异常十分简单：
-```js
-// src/exception/custom.js
+```ts
+// src/exception/custom.ts
 import { StatusCodes } from 'http-status-codes'
 import Base from './Base'
 
@@ -517,7 +517,7 @@ export default class Custom extends Base {
 #### Exception Usage
 
 在控制器中的使用十分简单，就像抛出原生异常一样:
-```js
+```ts
 /**
  * get info by id
  * @param {Context} ctx
@@ -529,7 +529,7 @@ const throwCustom = async (ctx) => {
 
 ### Middlerware
 
-所有的中间件必须放在`src/middleware`下，且在`compose.js`里面注册中间件。
+所有的中间件必须放在`src/middleware`下，且在`compose.ts`里面注册中间件。
 
 目前框架内置的中间件有(洋葱模型从外到里)：
 
@@ -553,7 +553,7 @@ const throwCustom = async (ctx) => {
 
 且每个目录下的文件按年月日拆分。
 
-主要逻辑在`src/logger.js` 下，暴露多个`api`:`writeInfoLog`,`writeErrorLog`,`writeDebugLog`,`writeLog`等，你可以根据场景写入日志。
+主要逻辑在`src/logger.ts` 下，暴露多个`api`:`writeInfoLog`,`writeErrorLog`,`writeDebugLog`,`writeLog`等，你可以根据场景写入日志。
 
 > 注意：本框架重写了 `Console.info`,`Console.error`,`Console.warn`,`Console.log`，你只需要使用这几个日志方法即可记录日志。
 
@@ -618,7 +618,7 @@ RABBIT_MQ_PASS=guest
 #### 创建通道
 
 在`src/messageQueue/channel`下面创建文件，示例：
-```js
+```ts
 import Base from './Base'
 
 export default class Normal extends Base {
@@ -657,13 +657,13 @@ export default class Normal extends Base {
 }
 ```
 
-具体逻辑请看`src/messageQueue/channel/base.js`，封装比较粗浅。
+具体逻辑请看`src/messageQueue/channel/base.ts`，封装比较粗浅。
 
 #### 消费
 
 消费的使用比较简单，提取对应的客户端执行消费即可，示例：
-```js
-// src/api/controller/mq.js
+```ts
+// src/api/controller/mq.ts
 import Success from "../../exception/Success";
 import { getClients } from "../../messageQueue/index";
 
@@ -690,8 +690,8 @@ REDIS_DB=1
 ```
 
 使用示例：
-```js
-// src/api/controller/redis.js
+```ts
+// src/api/controller/redis.ts
 import Success from '../../exception/Success'
 import RedisClient from '../../redis'
 

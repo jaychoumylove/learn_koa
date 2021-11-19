@@ -14,7 +14,7 @@
     "http-status-codes": "^2.1.4",
     "joi": "^17.4.1",
     "koa": "^2.13.1",
-    "koa-bodyparser": "^4.3.0",
+    "koa-body": "^4.2.0",
     "koa-compose": "^4.1.0",
     "koa-response-time": "^2.1.0",
     "koa-send": "^5.0.1",

@@ -135,3 +135,5 @@ temp/
 ormconfig.ts
 ormconfig.js
 ormconfig.json
+
+public/*
