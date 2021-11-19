@@ -1,14 +1,11 @@
 import { createClient } from 'redis';
 import { config } from 'dotenv'
-import {
-    writeErrorLog,
-} from './Logger'
 
 config()
 
 let RedisClient = null
 
-if (Boolean(process.env.REDIS_STATUS)) {
+if (parseInt(process.env.REDIS_STATUS)) {
     RedisClient = createClient({
         db: process.env.REDIS_DB,
         host: process.env.REDIS_HOST,

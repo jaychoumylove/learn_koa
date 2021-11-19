@@ -7,7 +7,7 @@ import { initWithConsole } from './Logger'
 
 initWithConsole()
 
-import './messageQueue/Index'
+import './messageQueue'
 import './Redis'
 import { createConnection } from 'typeorm';
 
@@ -17,8 +17,9 @@ app.use(middleware)
 const port = process.env.PORT || 3000;
 
 createConnection().then(r => {
-    console.log('Connection is ready!')
+    console.log('DATABASE Connection is ready!')
 }).catch(e => {
+    console.log('DATABASE Connection refused!')
     console.error(e)
 })
 
