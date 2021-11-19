@@ -137,3 +137,4 @@ ormconfig.js
 ormconfig.json
 
 public/*
+docker/*
