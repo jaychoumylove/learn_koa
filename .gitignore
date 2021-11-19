@@ -131,3 +131,6 @@ knexfile.js
 ormconfig.ts
 ormconfig.js
 ormconfig.json
+
+public/*
+docker/*

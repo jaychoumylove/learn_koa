@@ -17,7 +17,7 @@
     "joi": "^17.4.1",
     "knex": "^0.95.6",
     "koa": "^2.13.1",
-    "koa-bodyparser": "^4.3.0",
+    "koa-body": "^4.2.0",
     "koa-compose": "^4.1.0",
     "koa-response-time": "^2.1.0",
     "koa-send": "^5.0.1",
